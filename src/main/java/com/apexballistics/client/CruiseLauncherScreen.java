@@ -10,19 +10,14 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.network.PacketDistributor;
 
-import java.util.List;
-
 public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncherMenu> {
     private static final ResourceLocation TEXTURE = ApexBallistics.id("textures/gui/cruise_launcher.png");
     private static final int LABEL_COLOR = 0x404040;
-    private static final int HINT_COLOR = 0x3F3F3F;
     private static final int STATUS_COLOR = 0x2E4A28;
-    private static final int HINT_MAX_WIDTH = 60;
     private static final int STATUS_MAX_WIDTH = 64;
 
     private EditBox xBox;
@@ -138,8 +133,6 @@ public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncher
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, LABEL_COLOR, false);
-        this.drawHintAbove(graphics, Component.translatable("gui.apexballistics.cruise_launcher.put_missile"), 8, 36, HINT_MAX_WIDTH);
-        this.drawHintAbove(graphics, Component.translatable("gui.apexballistics.cruise_launcher.put_location"), 8, 74, HINT_MAX_WIDTH);
         graphics.drawString(this.font, Component.translatable("gui.apexballistics.cruise_launcher.x"), 72, 39, LABEL_COLOR, false);
         graphics.drawString(this.font, Component.translatable("gui.apexballistics.cruise_launcher.y"), 72, 59, LABEL_COLOR, false);
         graphics.drawString(this.font, Component.translatable("gui.apexballistics.cruise_launcher.z"), 72, 77, LABEL_COLOR, false);
@@ -150,19 +143,6 @@ public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncher
                 : Component.translatable("gui.apexballistics.cruise_launcher.missing_missile");
         String clipped = this.font.plainSubstrByWidth(status.getString(), STATUS_MAX_WIDTH);
         graphics.drawString(this.font, clipped, 8, 97, STATUS_COLOR, false);
-    }
-
-    private void drawHintAbove(GuiGraphics graphics, Component text, int x, int slotY, int maxWidth) {
-        List<FormattedCharSequence> lines = this.font.split(text, maxWidth);
-        if (lines.size() > 2) {
-            lines = lines.subList(0, 2);
-        }
-        int startY = slotY - 2 - lines.size() * 9;
-        int y = startY;
-        for (FormattedCharSequence line : lines) {
-            graphics.drawString(this.font, line, x, y, HINT_COLOR, false);
-            y += 9;
-        }
     }
 
     @Override
