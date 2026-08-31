@@ -6,20 +6,20 @@ Placeholder 16×16 item textures and a simple in-code missile model are included
 
 ## The jar (this is the file you install)
 
-The GitHub repo is source code. The playable file is created by building:
+Download **[`jars/apexballistics-1.0.0.jar`](jars/apexballistics-1.0.0.jar)** from this repo and put it in your Minecraft `mods` folder (Forge 1.21.1). That is the only file you need.
 
-**`build/libs/apexballistics-1.0.0.jar`**
+To rebuild from source (Java 21):
 
 ```bash
 ./gradlew build
 ```
 
-Then copy `build/libs/apexballistics-1.0.0.jar` into your Minecraft `mods` folder (Forge 1.21.1). There is only one jar to install.
+That writes `build/libs/apexballistics-1.0.0.jar` (also copied to `jars/`).
 
 ## Install
 
 1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (52.1.16 or newer).
-2. Build with `./gradlew build`, then take **`build/libs/apexballistics-1.0.0.jar`**.
+2. Download **[`jars/apexballistics-1.0.0.jar`](jars/apexballistics-1.0.0.jar)** (or run `./gradlew build` and take `build/libs/apexballistics-1.0.0.jar`).
 3. Put that **one jar** in your `mods` folder.
 
 Build from source (Java 21):
