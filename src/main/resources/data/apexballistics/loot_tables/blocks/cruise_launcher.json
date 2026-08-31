@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "apexballistics:cruise_launcher",
+          "properties": {
+            "part": "foot"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "apexballistics:cruise_launcher"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "apexballistics:blocks/cruise_launcher"
+}

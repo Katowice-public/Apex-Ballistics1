@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "apexballistics:he_missile" },
+    { "item": "minecraft:ender_eye" },
+    { "item": "minecraft:redstone" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:homing_missile"
+  }
+}

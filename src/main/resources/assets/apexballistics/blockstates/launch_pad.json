@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,triggered=false": { "model": "apexballistics:block/launch_pad" },
+    "facing=south,triggered=false": { "model": "apexballistics:block/launch_pad", "y": 180 },
+    "facing=west,triggered=false": { "model": "apexballistics:block/launch_pad", "y": 270 },
+    "facing=east,triggered=false": { "model": "apexballistics:block/launch_pad", "y": 90 },
+    "facing=north,triggered=true": { "model": "apexballistics:block/launch_pad" },
+    "facing=south,triggered=true": { "model": "apexballistics:block/launch_pad", "y": 180 },
+    "facing=west,triggered=true": { "model": "apexballistics:block/launch_pad", "y": 270 },
+    "facing=east,triggered=true": { "model": "apexballistics:block/launch_pad", "y": 90 }
+  }
+}

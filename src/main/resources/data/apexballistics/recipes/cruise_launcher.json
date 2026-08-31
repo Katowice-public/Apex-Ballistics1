@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "D": { "item": "minecraft:dispenser" },
+    "L": { "item": "apexballistics:launch_pad" },
+    "C": { "item": "minecraft:copper_ingot" }
+  },
+  "pattern": [
+    "III",
+    "DLD",
+    "ICI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:cruise_launcher"
+  }
+}

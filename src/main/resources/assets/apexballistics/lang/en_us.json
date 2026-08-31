@@ -1,0 +1,59 @@
+{
+  "itemGroup.apexballistics": "Apex Ballistics",
+
+  "item.apexballistics.rocket_fuel": "Rocket Fuel",
+  "item.apexballistics.he_missile": "HE Missile",
+  "item.apexballistics.incendiary_missile": "Incendiary Missile",
+  "item.apexballistics.cluster_missile": "Cluster Missile",
+  "item.apexballistics.homing_missile": "Homing Missile",
+  "item.apexballistics.bunker_missile": "Bunker Missile",
+  "item.apexballistics.cruise_missile": "Cruise Missile",
+  "item.apexballistics.missile_launcher": "Missile Launcher",
+  "item.apexballistics.target_designator": "Target Designator",
+
+  "block.apexballistics.launch_pad": "Launch Pad",
+  "block.apexballistics.cruise_launcher": "Cruise Launcher",
+
+  "entity.apexballistics.missile": "Missile",
+  "entity.apexballistics.cruise_missile": "Cruise Missile",
+
+  "item.apexballistics.missile.tooltip.he_missile": "High-explosive blast on impact",
+  "item.apexballistics.missile.tooltip.incendiary_missile": "Smaller blast that starts fires",
+  "item.apexballistics.missile.tooltip.cluster_missile": "Splits into bomblets on impact",
+  "item.apexballistics.missile.tooltip.homing_missile": "Steers toward a locked or nearby target",
+  "item.apexballistics.missile.tooltip.bunker_missile": "Heavy blast that punches downward",
+  "item.apexballistics.missile.tooltip.ammo": "Load into a launcher or launch pad",
+  "item.apexballistics.cruise_missile.tooltip": "Load into a cruise launcher, then set a location",
+  "item.apexballistics.cruise_missile.tooltip.size": "3 blocks tall, 1 block wide — heavy bunker-buster",
+
+  "item.apexballistics.missile_launcher.tooltip": "Right-click to fire a missile from your inventory",
+  "item.apexballistics.target_designator.tooltip": "Right-click a block to mark it, then use on a launch pad or cruise launcher",
+  "item.apexballistics.target_designator.marked": "Target marked: %s, %s, %s",
+  "item.apexballistics.target_designator.target": "Target: %s, %s, %s",
+  "item.apexballistics.target_designator.no_target": "No target marked",
+
+  "block.apexballistics.launch_pad.loaded": "Launch pad loaded: %s",
+  "block.apexballistics.launch_pad.already_loaded": "Launch pad already loaded",
+  "block.apexballistics.launch_pad.unloaded": "Missile ejected",
+  "block.apexballistics.launch_pad.target_set": "Launch pad target: %s, %s, %s",
+
+  "container.apexballistics.cruise_launcher": "Cruise Launcher",
+  "gui.apexballistics.cruise_launcher.put_missile": "Put the missile here",
+  "gui.apexballistics.cruise_launcher.put_location": "Put the location here",
+  "gui.apexballistics.cruise_launcher.slot_missile": "Put a cruise missile in this slot",
+  "gui.apexballistics.cruise_launcher.slot_location": "Put a marked target designator in this slot",
+  "gui.apexballistics.cruise_launcher.missile": "Missile",
+  "gui.apexballistics.cruise_launcher.location": "Location",
+  "gui.apexballistics.cruise_launcher.x": "X",
+  "gui.apexballistics.cruise_launcher.y": "Y",
+  "gui.apexballistics.cruise_launcher.z": "Z",
+  "gui.apexballistics.cruise_launcher.launch": "Launch",
+  "gui.apexballistics.cruise_launcher.ready": "Ready",
+  "gui.apexballistics.cruise_launcher.missing_missile": "No missile",
+  "gui.apexballistics.cruise_launcher.missing_target": "No target",
+
+  "subtitles.apexballistics.missile_launch": "Missile launches",
+  "subtitles.apexballistics.missile_explode": "Missile explodes",
+  "subtitles.apexballistics.silo_fire": "Launch pad fires",
+  "subtitles.apexballistics.target_lock": "Target locks"
+}

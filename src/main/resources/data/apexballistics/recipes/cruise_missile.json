@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "T": { "item": "minecraft:tnt" },
+    "B": { "item": "apexballistics:bunker_missile" },
+    "F": { "item": "apexballistics:rocket_fuel" }
+  },
+  "pattern": [
+    "ITI",
+    "TBT",
+    "IFI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:cruise_missile"
+  }
+}

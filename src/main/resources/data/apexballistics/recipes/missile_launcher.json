@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "D": { "item": "minecraft:dispenser" },
+    "B": { "item": "minecraft:blaze_rod" },
+    "L": { "item": "minecraft:lever" }
+  },
+  "pattern": [
+    "IBI",
+    "IDI",
+    "ILI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:missile_launcher"
+  }
+}
