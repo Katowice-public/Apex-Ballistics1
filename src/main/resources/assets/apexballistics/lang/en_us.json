@@ -1,0 +1,39 @@
+{
+  "itemGroup.apexballistics": "Apex Ballistics",
+
+  "item.apexballistics.rocket_fuel": "Rocket Fuel",
+  "item.apexballistics.he_missile": "HE Missile",
+  "item.apexballistics.incendiary_missile": "Incendiary Missile",
+  "item.apexballistics.cluster_missile": "Cluster Missile",
+  "item.apexballistics.homing_missile": "Homing Missile",
+  "item.apexballistics.bunker_missile": "Bunker Missile",
+  "item.apexballistics.missile_launcher": "Missile Launcher",
+  "item.apexballistics.target_designator": "Target Designator",
+
+  "block.apexballistics.launch_pad": "Launch Pad",
+
+  "entity.apexballistics.missile": "Missile",
+
+  "item.apexballistics.missile.tooltip.he_missile": "High-explosive blast on impact",
+  "item.apexballistics.missile.tooltip.incendiary_missile": "Smaller blast that starts fires",
+  "item.apexballistics.missile.tooltip.cluster_missile": "Splits into bomblets on impact",
+  "item.apexballistics.missile.tooltip.homing_missile": "Steers toward a locked or nearby target",
+  "item.apexballistics.missile.tooltip.bunker_missile": "Heavy blast that punches downward",
+  "item.apexballistics.missile.tooltip.ammo": "Load into a launcher or launch pad",
+
+  "item.apexballistics.missile_launcher.tooltip": "Right-click to fire a missile from your inventory",
+  "item.apexballistics.target_designator.tooltip": "Right-click a block to mark it, then use on a launch pad",
+  "item.apexballistics.target_designator.marked": "Target marked: %s, %s, %s",
+  "item.apexballistics.target_designator.target": "Target: %s, %s, %s",
+  "item.apexballistics.target_designator.no_target": "No target marked",
+
+  "block.apexballistics.launch_pad.loaded": "Launch pad loaded: %s",
+  "block.apexballistics.launch_pad.already_loaded": "Launch pad already loaded",
+  "block.apexballistics.launch_pad.unloaded": "Missile ejected",
+  "block.apexballistics.launch_pad.target_set": "Launch pad target: %s, %s, %s",
+
+  "subtitles.apexballistics.missile_launch": "Missile launches",
+  "subtitles.apexballistics.missile_explode": "Missile explodes",
+  "subtitles.apexballistics.silo_fire": "Launch pad fires",
+  "subtitles.apexballistics.target_lock": "Target locks"
+}

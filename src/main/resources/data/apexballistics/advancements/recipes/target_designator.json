@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_spyglass": {
+      "conditions": {
+        "items": [
+          { "items": "minecraft:spyglass" }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [["has_spyglass"]],
+  "rewards": {
+    "recipes": ["apexballistics:target_designator"]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "missile_launch": {
+    "subtitle": "subtitles.apexballistics.missile_launch",
+    "sounds": [
+      {
+        "name": "minecraft:entity/firework_rocket/launch",
+        "volume": 1.0,
+        "pitch": 0.85
+      }
+    ]
+  },
+  "missile_explode": {
+    "subtitle": "subtitles.apexballistics.missile_explode",
+    "sounds": [
+      {
+        "name": "minecraft:entity/generic/explode",
+        "volume": 1.0,
+        "pitch": 0.9
+      }
+    ]
+  },
+  "silo_fire": {
+    "subtitle": "subtitles.apexballistics.silo_fire",
+    "sounds": [
+      {
+        "name": "minecraft:entity/firework_rocket/launch",
+        "volume": 1.2,
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:entity/generic/explode",
+        "volume": 0.4,
+        "pitch": 1.4
+      }
+    ]
+  },
+  "target_lock": {
+    "subtitle": "subtitles.apexballistics.target_lock",
+    "sounds": [
+      {
+        "name": "minecraft:entity/experience_orb/pickup",
+        "volume": 0.8,
+        "pitch": 1.4
+      }
+    ]
+  }
+}

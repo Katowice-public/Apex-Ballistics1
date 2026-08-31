@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "apexballistics:he_missile" },
+    { "item": "minecraft:fire_charge" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:incendiary_missile"
+  }
+}

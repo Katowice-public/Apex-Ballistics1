@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "apexballistics:block/launch_pad",
+    "all": "apexballistics:block/launch_pad"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 6, 16],
+      "faces": {
+        "north": { "uv": [0, 10, 16, 16], "texture": "#all" },
+        "south": { "uv": [0, 10, 16, 16], "texture": "#all" },
+        "west": { "uv": [0, 10, 16, 16], "texture": "#all" },
+        "east": { "uv": [0, 10, 16, 16], "texture": "#all" },
+        "up": { "uv": [0, 0, 16, 16], "texture": "#all" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#all" }
+      }
+    },
+    {
+      "from": [5, 6, 5],
+      "to": [11, 7, 11],
+      "faces": {
+        "north": { "uv": [5, 9, 11, 10], "texture": "#all" },
+        "south": { "uv": [5, 9, 11, 10], "texture": "#all" },
+        "west": { "uv": [5, 9, 11, 10], "texture": "#all" },
+        "east": { "uv": [5, 9, 11, 10], "texture": "#all" },
+        "up": { "uv": [5, 5, 11, 11], "texture": "#all" }
+      }
+    }
+  ]
+}

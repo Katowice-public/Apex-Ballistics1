@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": { "item": "minecraft:copper_ingot" },
+    "R": { "item": "minecraft:redstone" },
+    "S": { "item": "minecraft:spyglass" }
+  },
+  "pattern": [
+    " C ",
+    "SRS",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:target_designator"
+  }
+}

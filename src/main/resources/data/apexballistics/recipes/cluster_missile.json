@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "apexballistics:he_missile" },
+    { "item": "minecraft:firework_star" },
+    { "item": "minecraft:firework_star" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:cluster_missile"
+  }
+}

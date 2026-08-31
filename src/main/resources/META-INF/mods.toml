@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+issueTrackerURL="https://github.com/Katowice-public/Apex-Ballistics1/issues"
+
+[[mods]]
+modId="apexballistics"
+version="1.0.0"
+displayName="Apex Ballistics"
+displayURL="https://github.com/Katowice-public/Apex-Ballistics1"
+logoFile="logo.png"
+authors="Behi Katowice"
+description='''Apex Ballistics adds handheld missile launchers, warheads, a target designator, and redstone launch pads to Minecraft 1.21.1.
+
+Placeholder 16x16 textures and vanilla sound stand-ins ship in this jar. Drop in your own models, textures, and .ogg files later — no extra mods required.'''
+
+accessTransformers = []
+
+[[dependencies.apexballistics]]
+    modId="forge"
+    mandatory=true
+    versionRange="[52.1.16,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.apexballistics]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.21.1,1.22)"
+    ordering="NONE"
+    side="BOTH"

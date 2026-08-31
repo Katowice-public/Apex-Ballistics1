@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": { "item": "minecraft:iron_block" },
+    "D": { "item": "minecraft:dispenser" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "O": { "item": "minecraft:observer" }
+  },
+  "pattern": [
+    "C C",
+    "IDI",
+    "IOI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:launch_pad"
+  }
+}
