@@ -2,6 +2,7 @@ package com.apexballistics.registry;
 
 import com.apexballistics.ApexBallistics;
 import com.apexballistics.entity.WarheadType;
+import com.apexballistics.item.CoordToolItem;
 import com.apexballistics.item.CruiseMissileItem;
 import com.apexballistics.item.MissileItem;
 import com.apexballistics.item.MissileLauncherItem;
@@ -40,6 +41,9 @@ public final class ModItems {
 
     public static final RegistryObject<Item> TARGET_DESIGNATOR = ITEMS.register("target_designator",
             () -> new TargetDesignatorItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<Item> COORD_TOOL = ITEMS.register("coord_tool",
+            () -> new CoordToolItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> CRUISE_MISSILE = ITEMS.register("cruise_missile",
             () -> new CruiseMissileItem(new Item.Properties().stacksTo(8).rarity(Rarity.RARE)));

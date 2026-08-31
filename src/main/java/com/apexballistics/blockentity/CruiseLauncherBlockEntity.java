@@ -3,7 +3,7 @@ package com.apexballistics.blockentity;
 import com.apexballistics.block.CruiseLauncherBlock;
 import com.apexballistics.entity.CruiseMissileEntity;
 import com.apexballistics.item.CruiseMissileItem;
-import com.apexballistics.item.TargetDesignatorItem;
+import com.apexballistics.item.LocationItems;
 import com.apexballistics.menu.CruiseLauncherMenu;
 import com.apexballistics.registry.ModBlockEntities;
 import com.apexballistics.registry.ModDataComponents;
@@ -43,7 +43,7 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
                 return stack.getItem() instanceof CruiseMissileItem;
             }
             if (slot == SLOT_LOCATION) {
-                return stack.getItem() instanceof TargetDesignatorItem;
+                return LocationItems.isLocationItem(stack);
             }
             return false;
         }
@@ -57,7 +57,7 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         protected void onContentsChanged(int slot) {
             if (slot == SLOT_LOCATION) {
                 ItemStack stack = this.getStackInSlot(SLOT_LOCATION);
-                if (stack.getItem() instanceof TargetDesignatorItem) {
+                if (LocationItems.isLocationItem(stack)) {
                     BlockPos marked = stack.get(ModDataComponents.TARGET_POS.get());
                     if (marked != null) {
                         CruiseLauncherBlockEntity.this.setTarget(marked);

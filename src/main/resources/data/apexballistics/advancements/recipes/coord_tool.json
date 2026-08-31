@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_compass": {
+      "conditions": {
+        "items": [
+          { "items": "minecraft:compass" }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [["has_compass"]],
+  "rewards": {
+    "recipes": ["apexballistics:coord_tool"]
+  }
+}

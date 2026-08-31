@@ -1,9 +1,9 @@
 package com.apexballistics.block;
 
 import com.apexballistics.blockentity.LaunchPadBlockEntity;
+import com.apexballistics.item.LocationItems;
 import com.apexballistics.item.MissileItem;
 import com.apexballistics.item.MissileLauncherItem;
-import com.apexballistics.item.TargetDesignatorItem;
 import com.apexballistics.registry.ModDataComponents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -102,7 +102,7 @@ public class LaunchPadBlock extends BaseEntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
 
-        if (stack.getItem() instanceof TargetDesignatorItem) {
+        if (LocationItems.isLocationItem(stack)) {
             BlockPos target = stack.get(ModDataComponents.TARGET_POS.get());
             if (target != null) {
                 if (!level.isClientSide) {

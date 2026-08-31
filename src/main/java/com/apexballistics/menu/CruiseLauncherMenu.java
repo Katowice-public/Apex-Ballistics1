@@ -2,7 +2,7 @@ package com.apexballistics.menu;
 
 import com.apexballistics.blockentity.CruiseLauncherBlockEntity;
 import com.apexballistics.item.CruiseMissileItem;
-import com.apexballistics.item.TargetDesignatorItem;
+import com.apexballistics.item.LocationItems;
 import com.apexballistics.registry.ModBlocks;
 import com.apexballistics.registry.ModMenus;
 import net.minecraft.core.BlockPos;
@@ -103,7 +103,7 @@ public class CruiseLauncherMenu extends AbstractContainerMenu {
             if (!this.moveItemStackTo(stack, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (stack.getItem() instanceof TargetDesignatorItem) {
+        } else if (LocationItems.isLocationItem(stack)) {
             if (!this.moveItemStackTo(stack, 1, 2, false)) {
                 return ItemStack.EMPTY;
             }

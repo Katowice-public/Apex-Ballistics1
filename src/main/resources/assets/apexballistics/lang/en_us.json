@@ -10,6 +10,7 @@
   "item.apexballistics.cruise_missile": "Cruise Missile",
   "item.apexballistics.missile_launcher": "Missile Launcher",
   "item.apexballistics.target_designator": "Target Designator",
+  "item.apexballistics.coord_tool": "Coordinate Tool",
 
   "block.apexballistics.launch_pad": "Launch Pad",
   "block.apexballistics.cruise_launcher": "Cruise Launcher",
@@ -31,6 +32,7 @@
   "item.apexballistics.target_designator.marked": "Target marked: %s, %s, %s",
   "item.apexballistics.target_designator.target": "Target: %s, %s, %s",
   "item.apexballistics.target_designator.no_target": "No target marked",
+  "item.apexballistics.coord_tool.tooltip": "Right-click to type X, Y, and Z, then put this in a cruise launcher",
 
   "block.apexballistics.launch_pad.loaded": "Launch pad loaded: %s",
   "block.apexballistics.launch_pad.already_loaded": "Launch pad already loaded",
@@ -41,7 +43,7 @@
   "gui.apexballistics.cruise_launcher.put_missile": "Put the missile here",
   "gui.apexballistics.cruise_launcher.put_location": "Put the location here",
   "gui.apexballistics.cruise_launcher.slot_missile": "Put a cruise missile in this slot",
-  "gui.apexballistics.cruise_launcher.slot_location": "Put a marked target designator in this slot",
+  "gui.apexballistics.cruise_launcher.slot_location": "Put a coordinate tool or target designator here",
   "gui.apexballistics.cruise_launcher.missile": "Missile",
   "gui.apexballistics.cruise_launcher.location": "Location",
   "gui.apexballistics.cruise_launcher.x": "X",
@@ -51,6 +53,13 @@
   "gui.apexballistics.cruise_launcher.ready": "Ready",
   "gui.apexballistics.cruise_launcher.missing_missile": "No missile",
   "gui.apexballistics.cruise_launcher.missing_target": "No target",
+
+  "container.apexballistics.coord_tool": "Coordinate Tool",
+  "gui.apexballistics.coord_tool.x": "X",
+  "gui.apexballistics.coord_tool.y": "Y",
+  "gui.apexballistics.coord_tool.z": "Z",
+  "gui.apexballistics.coord_tool.save": "Save",
+  "gui.apexballistics.coord_tool.saved": "Coordinates saved: %s, %s, %s",
 
   "subtitles.apexballistics.missile_launch": "Missile launches",
   "subtitles.apexballistics.missile_explode": "Missile explodes",

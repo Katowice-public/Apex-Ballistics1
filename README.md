@@ -4,10 +4,22 @@ A **Minecraft 1.21.1 Forge** mod that adds missiles, a handheld launcher, a targ
 
 Placeholder 16×16 item textures and a simple in-code missile model are included so the mod is playable now. You can drop in real models, textures, and `.ogg` sounds later without changing the Java.
 
+## The jar (this is the file you install)
+
+The GitHub repo is source code. The playable file is created by building:
+
+**`build/libs/apexballistics-1.0.0.jar`**
+
+```bash
+./gradlew build
+```
+
+Then copy `build/libs/apexballistics-1.0.0.jar` into your Minecraft `mods` folder (Forge 1.21.1). There is only one jar to install.
+
 ## Install
 
 1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (52.1.16 or newer).
-2. Build or grab `apexballistics-1.0.0.jar` from `build/libs`.
+2. Build with `./gradlew build`, then take **`build/libs/apexballistics-1.0.0.jar`**.
 3. Put that **one jar** in your `mods` folder.
 
 Build from source (Java 21):
@@ -31,6 +43,7 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 | **Cruise Missile** | 3 blocks tall, 1 block wide. Load only in the cruise launcher. Very large blast that punches deep. |
 | **Rocket Fuel** | Crafting ingredient. |
 | **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
+| **Coordinate Tool** | Right-click to open a GUI with X, Y, and Z boxes. Save, then put it in a cruise launcher or use it on a launch pad. |
 | **Launch Pad** | Load a missile, optional designator target, then right-click / use a launcher / pulse redstone to fire. Sneak-right-click ejects the missile. |
 | **Cruise Launcher** | 2 blocks long, 1 block high. Open the GUI, put in a cruise missile, set a location (designator or typed X/Y/Z), then Launch or pulse redstone. |
 
@@ -49,6 +62,7 @@ Blast size and whether explosions break blocks are in `config/apexballistics-com
 - **Cruise Missile** — bunker missile, TNT, iron, rocket fuel
 - **Launcher** — iron, dispenser, blaze rod, lever
 - **Designator** — copper, redstone, 2 spyglasses
+- **Coordinate Tool** — compass, paper, copper, redstone
 - **Launch Pad** — iron blocks, dispenser, observer, copper
 - **Cruise Launcher** — launch pad, 2 dispensers, iron, copper
 
@@ -63,6 +77,7 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 
 - `missile_launcher.png`
 - `target_designator.png`
+- `coord_tool.png`
 - `rocket_fuel.png`
 - `he_missile.png`
 - `incendiary_missile.png`
@@ -79,8 +94,11 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 **Missile body (64×64 PNG)**  
 `assets/apexballistics/textures/entity/` — same names as the missiles, plus `bomblet.png` and `cruise_missile.png`
 
-**Cruise launcher GUI (256×256 PNG, 176×202 used)**  
+**Cruise launcher GUI (256×256 PNG, 176×212 used)**  
 `assets/apexballistics/textures/gui/cruise_launcher.png`
+
+**Coordinate tool GUI (256×256 PNG, 176×108 used)**  
+`assets/apexballistics/textures/gui/coord_tool.png`
 
 **Sounds**  
 Right now `sounds.json` points at vanilla firework / explode / orb files so the events already play. To use your own `.ogg` files:

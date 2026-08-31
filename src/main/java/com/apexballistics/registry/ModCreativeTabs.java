@@ -20,6 +20,7 @@ public final class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.MISSILE_LAUNCHER.get());
                         output.accept(ModItems.TARGET_DESIGNATOR.get());
+                        output.accept(ModItems.COORD_TOOL.get());
                         output.accept(ModItems.LAUNCH_PAD.get());
                         output.accept(ModItems.CRUISE_LAUNCHER.get());
                         output.accept(ModItems.ROCKET_FUEL.get());
