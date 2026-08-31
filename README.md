@@ -18,7 +18,7 @@ That writes `build/libs/apexballistics-1.0.0.jar` (also copied to `jars/`).
 
 ## Install
 
-1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (52.1.16 or newer).
+1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (**52.1.14** or newer).
 2. Download **[`jars/apexballistics-1.0.0.jar`](jars/apexballistics-1.0.0.jar)** (or run `./gradlew build` and take `build/libs/apexballistics-1.0.0.jar`).
 3. Put that **one jar** in your `mods` folder.
 
