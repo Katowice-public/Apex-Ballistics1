@@ -49,15 +49,21 @@ public class MissileEntity extends AbstractHurtingProjectile {
         super(ModEntities.MISSILE.get(), owner, direction.normalize(), level);
         this.setWarhead(warhead);
         this.setPos(owner.getX(), owner.getEyeY() - 0.1D, owner.getZ());
-        this.assignDirectionalMovement(direction.normalize(), 0.16D);
+        this.setFlight(direction, 0.16D);
         this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
     }
 
     public MissileEntity(Level level, double x, double y, double z, Vec3 direction, WarheadType warhead) {
         super(ModEntities.MISSILE.get(), x, y, z, direction.normalize(), level);
         this.setWarhead(warhead);
-        this.assignDirectionalMovement(direction.normalize(), 0.14D);
+        this.setFlight(direction, 0.14D);
         this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
+    }
+
+    private void setFlight(Vec3 direction, double power) {
+        this.accelerationPower = power;
+        this.setDeltaMovement(direction.normalize().scale(power));
+        this.hasImpulse = true;
     }
 
     public void setWarhead(WarheadType warhead) {
@@ -93,10 +99,9 @@ public class MissileEntity extends AbstractHurtingProjectile {
     public void tick() {
         if (this.siloLaunch && this.boostTicks > 0) {
             this.boostTicks--;
-            this.assignDirectionalMovement(new Vec3(0.0D, 1.0D, 0.0D), 0.18D);
+            this.setFlight(new Vec3(0.0D, 1.0D, 0.0D), 0.18D);
             if (this.boostTicks == 0) {
-                Vec3 cruise = this.cruiseDirection();
-                this.assignDirectionalMovement(cruise, 0.16D);
+                this.setFlight(this.cruiseDirection(), 0.16D);
             }
         } else if (!this.level().isClientSide && (this.getWarhead().homing() || this.lockedTargetId != null)) {
             this.steerTowardTarget();
@@ -152,7 +157,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
             current = current.normalize();
         }
         Vec3 blended = current.scale(0.72D).add(desired.scale(0.28D)).normalize();
-        this.assignDirectionalMovement(blended, Math.max(this.accelerationPower, 0.16D));
+        this.setFlight(blended, Math.max(this.accelerationPower, 0.16D));
     }
 
     @Nullable
@@ -289,7 +294,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Warhead", this.getWarhead().ordinal());
         tag.putInt("MaxLife", this.maxLife);
@@ -304,7 +309,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setWarhead(WarheadType.byId(tag.getInt("Warhead")));
         this.maxLife = tag.contains("MaxLife") ? tag.getInt("MaxLife") : 200;

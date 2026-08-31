@@ -26,8 +26,6 @@ minecraft {
         configureEach {
             workingDir = layout.projectDirectory.dir('run')
             systemProperty 'forge.enabledGameTestNamespaces', 'apexballistics'
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
         }
 
         register('client')

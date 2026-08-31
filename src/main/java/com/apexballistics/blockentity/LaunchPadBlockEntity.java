@@ -153,7 +153,7 @@ public class LaunchPadBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains("Missile")) {
-            this.missile = ItemStack.parse(registries, tag.getCompound("Missile")).orElse(ItemStack.EMPTY);
+            this.missile = ItemStack.parse(registries, tag.get("Missile")).orElse(ItemStack.EMPTY);
         } else {
             this.missile = ItemStack.EMPTY;
         }
