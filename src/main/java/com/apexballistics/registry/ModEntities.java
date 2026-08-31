@@ -1,6 +1,7 @@
 package com.apexballistics.registry;
 
 import com.apexballistics.ApexBallistics;
+import com.apexballistics.entity.CruiseMissileEntity;
 import com.apexballistics.entity.MissileEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -19,6 +20,14 @@ public final class ModEntities {
                     .updateInterval(1)
                     .fireImmune()
                     .build("apexballistics:missile"));
+
+    public static final RegistryObject<EntityType<CruiseMissileEntity>> CRUISE_MISSILE = ENTITY_TYPES.register("cruise_missile",
+            () -> EntityType.Builder.<CruiseMissileEntity>of(CruiseMissileEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 3.0F)
+                    .clientTrackingRange(16)
+                    .updateInterval(1)
+                    .fireImmune()
+                    .build("apexballistics:cruise_missile"));
 
     private ModEntities() {
     }

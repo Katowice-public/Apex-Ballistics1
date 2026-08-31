@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "apexballistics:launch_pad"
+    "apexballistics:launch_pad",
+    "apexballistics:cruise_launcher"
   ]
 }

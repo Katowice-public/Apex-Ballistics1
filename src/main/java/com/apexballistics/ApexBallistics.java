@@ -1,11 +1,13 @@
 package com.apexballistics;
 
+import com.apexballistics.network.ApexNetwork;
 import com.apexballistics.registry.ModBlockEntities;
 import com.apexballistics.registry.ModBlocks;
 import com.apexballistics.registry.ModCreativeTabs;
 import com.apexballistics.registry.ModDataComponents;
 import com.apexballistics.registry.ModEntities;
 import com.apexballistics.registry.ModItems;
+import com.apexballistics.registry.ModMenus;
 import com.apexballistics.registry.ModSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +32,7 @@ public class ApexBallistics {
         ModItems.ITEMS.register(modBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModEntities.ENTITY_TYPES.register(modBus);
+        ModMenus.MENUS.register(modBus);
         ModSounds.SOUND_EVENTS.register(modBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modBus);
 
@@ -39,6 +42,7 @@ public class ApexBallistics {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(ApexNetwork::register);
         LOGGER.info("Apex Ballistics armed for Minecraft 1.21.1 / Forge");
     }
 

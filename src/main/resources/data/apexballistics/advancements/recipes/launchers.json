@@ -14,7 +14,8 @@
   "rewards": {
     "recipes": [
       "apexballistics:missile_launcher",
-      "apexballistics:launch_pad"
+      "apexballistics:launch_pad",
+      "apexballistics:cruise_launcher"
     ]
   }
 }

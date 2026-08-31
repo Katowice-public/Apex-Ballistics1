@@ -17,7 +17,8 @@
       "apexballistics:incendiary_missile",
       "apexballistics:cluster_missile",
       "apexballistics:homing_missile",
-      "apexballistics:bunker_missile"
+      "apexballistics:bunker_missile",
+      "apexballistics:cruise_missile"
     ]
   }
 }

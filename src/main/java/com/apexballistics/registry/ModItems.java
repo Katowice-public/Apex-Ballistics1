@@ -2,6 +2,7 @@ package com.apexballistics.registry;
 
 import com.apexballistics.ApexBallistics;
 import com.apexballistics.entity.WarheadType;
+import com.apexballistics.item.CruiseMissileItem;
 import com.apexballistics.item.MissileItem;
 import com.apexballistics.item.MissileLauncherItem;
 import com.apexballistics.item.TargetDesignatorItem;
@@ -40,8 +41,14 @@ public final class ModItems {
     public static final RegistryObject<Item> TARGET_DESIGNATOR = ITEMS.register("target_designator",
             () -> new TargetDesignatorItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    public static final RegistryObject<Item> CRUISE_MISSILE = ITEMS.register("cruise_missile",
+            () -> new CruiseMissileItem(new Item.Properties().stacksTo(8).rarity(Rarity.RARE)));
+
     public static final RegistryObject<Item> LAUNCH_PAD = ITEMS.register("launch_pad",
             () -> new BlockItem(ModBlocks.LAUNCH_PAD.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CRUISE_LAUNCHER = ITEMS.register("cruise_launcher",
+            () -> new BlockItem(ModBlocks.CRUISE_LAUNCHER.get(), new Item.Properties()));
 
     private ModItems() {
     }

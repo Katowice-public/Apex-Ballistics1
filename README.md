@@ -1,6 +1,6 @@
 # Apex Ballistics
 
-A **Minecraft 1.21.1 Forge** mod that adds missiles, a handheld launcher, a target designator, and a redstone launch pad. Everything ships in **one jar** — no GeckoLib or other extra mods.
+A **Minecraft 1.21.1 Forge** mod that adds missiles, a handheld launcher, a target designator, a redstone launch pad, and a two-block **cruise launcher**. Everything ships in **one jar** — no GeckoLib or other extra mods.
 
 Placeholder 16×16 item textures and a simple in-code missile model are included so the mod is playable now. You can drop in real models, textures, and `.ogg` sounds later without changing the Java.
 
@@ -28,9 +28,11 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 | **Cluster Missile** | Splits into bomblets on impact. |
 | **Homing Missile** | Steers toward a locked or nearby living target. |
 | **Bunker Missile** | Heavy blast that punches downward. |
+| **Cruise Missile** | 3 blocks tall, 1 block wide. Load only in the cruise launcher. Very large blast that punches deep. |
 | **Rocket Fuel** | Crafting ingredient. |
-| **Target Designator** | Right-click a block to mark it, then right-click a launch pad to program that target. |
+| **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
 | **Launch Pad** | Load a missile, optional designator target, then right-click / use a launcher / pulse redstone to fire. Sneak-right-click ejects the missile. |
+| **Cruise Launcher** | 2 blocks long, 1 block high. Open the GUI, put in a cruise missile, set a location (designator or typed X/Y/Z), then Launch or pulse redstone. |
 
 Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight.
 
@@ -44,9 +46,11 @@ Blast size and whether explosions break blocks are in `config/apexballistics-com
 - **Cluster** — HE missile + 2 firework stars
 - **Homing** — HE missile + eye of ender + redstone
 - **Bunker** — HE missile + obsidian + TNT
+- **Cruise Missile** — bunker missile, TNT, iron, rocket fuel
 - **Launcher** — iron, dispenser, blaze rod, lever
 - **Designator** — copper, redstone, 2 spyglasses
 - **Launch Pad** — iron blocks, dispenser, observer, copper
+- **Cruise Launcher** — launch pad, 2 dispensers, iron, copper
 
 All items are also in the **Apex Ballistics** creative tab.
 
@@ -65,12 +69,18 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 - `cluster_missile.png`
 - `homing_missile.png`
 - `bunker_missile.png`
+- `cruise_missile.png`
+- `cruise_launcher.png`
 
 **Block texture (16×16 PNG)**  
-`assets/apexballistics/textures/block/launch_pad.png`
+`assets/apexballistics/textures/block/launch_pad.png`  
+`assets/apexballistics/textures/block/cruise_launcher.png`
 
 **Missile body (64×64 PNG)**  
-`assets/apexballistics/textures/entity/` — same names as the missiles, plus `bomblet.png`
+`assets/apexballistics/textures/entity/` — same names as the missiles, plus `bomblet.png` and `cruise_missile.png`
+
+**Cruise launcher GUI (256×256 PNG, 176×202 used)**  
+`assets/apexballistics/textures/gui/cruise_launcher.png`
 
 **Sounds**  
 Right now `sounds.json` points at vanilla firework / explode / orb files so the events already play. To use your own `.ogg` files:
@@ -91,3 +101,5 @@ Mod logo: `logo.png` at the root of the jar.
 - `launcherCooldownTicks` — delay between launcher shots
 - `maxLifetimeTicks` — airburst timer
 - `homingRange` — how far homing missiles search
+- `cruiseExplosionPower` — cruise missile blast size
+- `cruiseMaxLifetimeTicks` — cruise missile airburst timer

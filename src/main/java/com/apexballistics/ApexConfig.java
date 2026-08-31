@@ -29,6 +29,14 @@ public class ApexConfig {
             .comment("How far homing missiles search for a living target, in blocks.")
             .defineInRange("homingRange", 32.0D, 8.0D, 96.0D);
 
+    private static final ForgeConfigSpec.DoubleValue CRUISE_POWER = BUILDER
+            .comment("Blast radius of a cruise missile. Several overlapping blasts are used so it can punch deep.")
+            .defineInRange("cruiseExplosionPower", 16.0D, 4.0D, 32.0D);
+
+    private static final ForgeConfigSpec.IntValue CRUISE_LIFETIME = BUILDER
+            .comment("Ticks a cruise missile can fly before it airbursts.")
+            .defineInRange("cruiseMaxLifetimeTicks", 800, 40, 2400);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean griefing = true;
@@ -36,6 +44,8 @@ public class ApexConfig {
     public static int launcherCooldownTicks = 25;
     public static int maxLifetimeTicks = 200;
     public static double homingRange = 32.0D;
+    public static float cruiseExplosionPower = 16.0F;
+    public static int cruiseMaxLifetimeTicks = 800;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -47,5 +57,7 @@ public class ApexConfig {
         launcherCooldownTicks = LAUNCHER_COOLDOWN.get();
         maxLifetimeTicks = MAX_LIFETIME.get();
         homingRange = HOMING_RANGE.get();
+        cruiseExplosionPower = CRUISE_POWER.get().floatValue();
+        cruiseMaxLifetimeTicks = CRUISE_LIFETIME.get();
     }
 }

@@ -10,7 +10,7 @@ displayName="Apex Ballistics"
 displayURL="https://github.com/Katowice-public/Apex-Ballistics1"
 logoFile="logo.png"
 authors="Behi Katowice"
-description='''Apex Ballistics adds handheld missile launchers, warheads, a target designator, and redstone launch pads to Minecraft 1.21.1.
+description='''Apex Ballistics adds handheld missile launchers, warheads, a target designator, launch pads, and a two-block cruise launcher to Minecraft 1.21.1.
 
 Placeholder 16x16 textures and vanilla sound stand-ins ship in this jar. Drop in your own models, textures, and .ogg files later — no extra mods required.'''
 

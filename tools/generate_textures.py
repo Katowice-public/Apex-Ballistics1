@@ -185,6 +185,122 @@ def scale_nn(img, factor: int):
     return out
 
 
+OLIVE = (62, 92, 48, 255)
+OLIVE_L = (108, 148, 72, 255)
+OLIVE_D = (32, 48, 28, 255)
+PANEL = (198, 198, 198, 255)
+PANEL_D = (139, 139, 139, 255)
+PANEL_L = (255, 255, 255, 255)
+SLOT = (8, 8, 8, 255)
+SLOT_RIM = (55, 55, 55, 255)
+FIELD = (32, 32, 36, 255)
+
+
+def draw_cruise_missile_item():
+    img = canvas(16)
+    fill(img, 5, 0, 11, 3, OLIVE_L)         # nose
+    fill(img, 6, 0, 10, 1, WHITE)
+    fill(img, 4, 3, 12, 13, OLIVE_D)
+    fill(img, 5, 3, 11, 13, OLIVE)
+    fill(img, 6, 3, 10, 13, OLIVE_L)
+    fill(img, 4, 7, 12, 9, ORANGE)          # band
+    fill(img, 4, 13, 12, 15, SMOKE)
+    fill(img, 6, 15, 10, 16, EXHAUST)
+    fill(img, 3, 11, 4, 15, OLIVE_D)        # fins
+    fill(img, 12, 11, 13, 15, OLIVE_D)
+    setp(img, 6, 4, WHITE)
+    return img
+
+
+def draw_cruise_launcher_item():
+    img = canvas(16)
+    fill(img, 1, 5, 15, 11, IRON_D)
+    fill(img, 2, 6, 14, 10, IRON)
+    fill(img, 3, 7, 13, 9, IRON_L)
+    fill(img, 1, 6, 4, 10, OLIVE)           # console
+    fill(img, 2, 7, 3, 9, GREEN_L)
+    fill(img, 12, 6, 15, 10, ORANGE)        # muzzle
+    fill(img, 13, 7, 15, 9, ORANGE_L)
+    rect(img, 1, 5, 15, 11, IRON_D)
+    setp(img, 2, 6, WHITE)
+    setp(img, 13, 6, WHITE)
+    return img
+
+
+def draw_cruise_launcher_block():
+    img = canvas(16)
+    fill(img, 0, 0, 16, 16, IRON_D)
+    fill(img, 1, 1, 15, 15, IRON)
+    fill(img, 2, 2, 14, 14, IRON_L)
+    fill(img, 2, 0, 6, 16, OLIVE_D)         # left rail
+    fill(img, 10, 0, 14, 16, OLIVE_D)
+    fill(img, 3, 0, 5, 16, OLIVE)
+    fill(img, 11, 0, 13, 16, OLIVE)
+    fill(img, 6, 6, 10, 10, BLACK)
+    rect(img, 6, 6, 10, 10, ORANGE)
+    fill(img, 7, 7, 9, 9, ORANGE_L)
+    for x, y in [(1, 1), (14, 1), (1, 14), (14, 14)]:
+        setp(img, x, y, WHITE)
+    return img
+
+
+def draw_cruise_entity():
+    # UV unwrap for a 16x48x16 cube at texOffs(0,0) on 64x64:
+    # down 0,0-16,16  up 16,0-32,16
+    # west 0,16-16,64  south 16,16-32,64  east 32,16-48,64  north 48,16-64,64
+    img = canvas(64, OLIVE_D)
+    fill(img, 0, 0, 16, 16, SMOKE)          # bottom / exhaust
+    fill(img, 4, 4, 12, 12, EXHAUST)
+    fill(img, 6, 6, 10, 10, WHITE)
+    fill(img, 16, 0, 32, 16, OLIVE_L)       # top / nose
+    fill(img, 20, 4, 28, 12, OLIVE)
+    fill(img, 22, 6, 26, 10, WHITE)
+    for u0 in (0, 16, 32, 48):
+        fill(img, u0, 16, u0 + 16, 64, OLIVE)
+        fill(img, u0, 16, u0 + 16, 24, OLIVE_L)   # nose band
+        fill(img, u0, 36, u0 + 16, 40, ORANGE)    # mid stripe
+        fill(img, u0, 56, u0 + 16, 64, SMOKE)     # exhaust housing
+        fill(img, u0 + 5, 18, u0 + 7, 54, OLIVE_D)
+        fill(img, u0 + 9, 18, u0 + 11, 54, OLIVE_L)
+        fill(img, u0 + 6, 58, u0 + 10, 62, EXHAUST)
+    return img
+
+
+def draw_slot(img, x, y):
+    fill(img, x, y, x + 18, y + 18, SLOT_RIM)
+    fill(img, x + 1, y + 1, x + 17, y + 17, SLOT)
+
+
+def draw_field(img, x, y, w, h):
+    fill(img, x, y, x + w, y + h, SLOT_RIM)
+    fill(img, x + 1, y + 1, x + w - 1, y + h - 1, FIELD)
+
+
+def draw_cruise_gui():
+    img = canvas(256, (0, 0, 0, 0))
+    fill(img, 0, 0, 176, 202, PANEL)
+    rect(img, 0, 0, 176, 202, SLOT_RIM)
+    fill(img, 1, 1, 175, 2, PANEL_L)
+    fill(img, 1, 1, 2, 201, PANEL_L)
+    fill(img, 174, 1, 175, 201, PANEL_D)
+    fill(img, 1, 200, 175, 201, PANEL_D)
+
+    draw_slot(img, 17, 29)   # missile (18, 30)
+    draw_slot(img, 17, 63)   # location (18, 64)
+    draw_field(img, 81, 31, 88, 16)
+    draw_field(img, 81, 51, 88, 16)
+    draw_field(img, 81, 71, 88, 16)
+    fill(img, 80, 90, 168, 106, PANEL_D)
+    fill(img, 81, 91, 167, 105, IRON_L)
+
+    for row in range(3):
+        for col in range(9):
+            draw_slot(img, 7 + col * 18, 119 + row * 18)
+    for col in range(9):
+        draw_slot(img, 7 + col * 18, 177)
+    return img
+
+
 def draw_logo():
     base = canvas(16, (12, 14, 20, 255))
     fill(base, 0, 0, 16, 16, (16, 18, 26, 255))
@@ -207,10 +323,13 @@ def main() -> None:
     write_png(items / "cluster_missile.png", draw_missile_item(YELLOW, ORANGE_L, stripe=True))
     write_png(items / "homing_missile.png", draw_missile_item(GREEN, GREEN_L, diamond=True))
     write_png(items / "bunker_missile.png", draw_missile_item(WHITE, IRON_L, heavy=True, stripe=True))
+    write_png(items / "cruise_missile.png", draw_cruise_missile_item())
     write_png(items / "missile_launcher.png", draw_launcher())
     write_png(items / "target_designator.png", draw_designator())
     write_png(items / "rocket_fuel.png", draw_fuel())
+    write_png(items / "cruise_launcher.png", draw_cruise_launcher_item())
     write_png(blocks / "launch_pad.png", draw_launch_pad())
+    write_png(blocks / "cruise_launcher.png", draw_cruise_launcher_block())
 
     write_png(entities / "he_missile.png", draw_entity(ORANGE, ORANGE_L))
     write_png(entities / "incendiary_missile.png", draw_entity(RED, RED_L))
@@ -218,6 +337,8 @@ def main() -> None:
     write_png(entities / "homing_missile.png", draw_entity(GREEN, GREEN_L))
     write_png(entities / "bunker_missile.png", draw_entity(WHITE, IRON_L))
     write_png(entities / "bomblet.png", draw_entity(ORANGE, YELLOW))
+    write_png(entities / "cruise_missile.png", draw_cruise_entity())
+    write_png(ROOT / "assets/apexballistics/textures/gui/cruise_launcher.png", draw_cruise_gui())
 
     write_png(ROOT / "logo.png", draw_logo())
     print("textures written")
