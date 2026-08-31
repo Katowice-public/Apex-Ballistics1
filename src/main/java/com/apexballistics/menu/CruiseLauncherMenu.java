@@ -25,16 +25,16 @@ public class CruiseLauncherMenu extends AbstractContainerMenu {
         this.launcher = launcher;
         this.access = ContainerLevelAccess.create(launcher.getLevel(), launcher.getBlockPos());
 
-        this.addSlot(new SlotItemHandler(launcher.getItems(), CruiseLauncherBlockEntity.SLOT_MISSILE, 18, 30));
-        this.addSlot(new SlotItemHandler(launcher.getItems(), CruiseLauncherBlockEntity.SLOT_LOCATION, 18, 64));
+        this.addSlot(new SlotItemHandler(launcher.getItems(), CruiseLauncherBlockEntity.SLOT_MISSILE, 18, 36));
+        this.addSlot(new SlotItemHandler(launcher.getItems(), CruiseLauncherBlockEntity.SLOT_LOCATION, 18, 74));
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 120 + row * 18));
+                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 130 + row * 18));
             }
         }
         for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 178));
+            this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 188));
         }
 
         this.addDataSlots(launcher.dataAccess);

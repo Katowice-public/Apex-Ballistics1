@@ -38,6 +38,10 @@
   "block.apexballistics.launch_pad.target_set": "Launch pad target: %s, %s, %s",
 
   "container.apexballistics.cruise_launcher": "Cruise Launcher",
+  "gui.apexballistics.cruise_launcher.put_missile": "Put the missile here",
+  "gui.apexballistics.cruise_launcher.put_location": "Put the location here",
+  "gui.apexballistics.cruise_launcher.slot_missile": "Put a cruise missile in this slot",
+  "gui.apexballistics.cruise_launcher.slot_location": "Put a marked target designator in this slot",
   "gui.apexballistics.cruise_launcher.missile": "Missile",
   "gui.apexballistics.cruise_launcher.location": "Location",
   "gui.apexballistics.cruise_launcher.x": "X",

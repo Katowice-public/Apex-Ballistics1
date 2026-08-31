@@ -278,26 +278,26 @@ def draw_field(img, x, y, w, h):
 
 def draw_cruise_gui():
     img = canvas(256, (0, 0, 0, 0))
-    fill(img, 0, 0, 176, 202, PANEL)
-    rect(img, 0, 0, 176, 202, SLOT_RIM)
+    fill(img, 0, 0, 176, 212, PANEL)
+    rect(img, 0, 0, 176, 212, SLOT_RIM)
     fill(img, 1, 1, 175, 2, PANEL_L)
-    fill(img, 1, 1, 2, 201, PANEL_L)
-    fill(img, 174, 1, 175, 201, PANEL_D)
-    fill(img, 1, 200, 175, 201, PANEL_D)
+    fill(img, 1, 1, 2, 211, PANEL_L)
+    fill(img, 174, 1, 175, 211, PANEL_D)
+    fill(img, 1, 210, 175, 211, PANEL_D)
 
-    draw_slot(img, 17, 29)   # missile (18, 30)
-    draw_slot(img, 17, 63)   # location (18, 64)
-    draw_field(img, 81, 31, 88, 16)
-    draw_field(img, 81, 51, 88, 16)
-    draw_field(img, 81, 71, 88, 16)
-    fill(img, 80, 90, 168, 106, PANEL_D)
-    fill(img, 81, 91, 167, 105, IRON_L)
+    draw_slot(img, 17, 35)   # missile (18, 36)
+    draw_slot(img, 17, 73)   # location (18, 74)
+    draw_field(img, 81, 35, 88, 16)
+    draw_field(img, 81, 55, 88, 16)
+    draw_field(img, 81, 73, 88, 16)
+    fill(img, 80, 94, 168, 110, PANEL_D)
+    fill(img, 81, 95, 167, 109, IRON_L)
 
     for row in range(3):
         for col in range(9):
-            draw_slot(img, 7 + col * 18, 119 + row * 18)
+            draw_slot(img, 7 + col * 18, 129 + row * 18)
     for col in range(9):
-        draw_slot(img, 7 + col * 18, 177)
+        draw_slot(img, 7 + col * 18, 187)
     return img
 
 
