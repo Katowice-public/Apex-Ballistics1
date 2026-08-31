@@ -21,6 +21,7 @@ public final class ClientModEvents {
         event.enqueueWork(() -> {
             MenuScreens.register(ModMenus.CRUISE_LAUNCHER.get(), CruiseLauncherScreen::new);
             MenuScreens.register(ModMenus.COORD_TOOL.get(), CoordToolScreen::new);
+            MenuScreens.register(ModMenus.MISSILE_LAUNCHER.get(), MissileLauncherScreen::new);
         });
     }
 

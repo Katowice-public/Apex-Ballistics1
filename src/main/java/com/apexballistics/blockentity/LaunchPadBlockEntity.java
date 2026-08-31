@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -100,7 +101,7 @@ public class LaunchPadBlockEntity extends BlockEntity {
 
         WarheadType warhead = missileItem.getWarhead();
         Direction facing = this.getBlockState().getValue(LaunchPadBlock.FACING);
-        Vec3 spawn = Vec3.atCenterOf(this.worldPosition).add(0.0D, 0.55D, 0.0D);
+        Vec3 spawn = Vec3.atCenterOf(this.worldPosition).add(0.0D, 0.85D, 0.0D);
         MissileEntity entity = new MissileEntity(this.level, spawn.x, spawn.y, spawn.z, new Vec3(0.0D, 1.0D, 0.0D), warhead);
         if (player != null) {
             entity.setOwner(player);
@@ -168,5 +169,12 @@ public class LaunchPadBlockEntity extends BlockEntity {
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        BlockPos pos = this.worldPosition;
+        return new AABB(pos.getX() - 1.5D, pos.getY(), pos.getZ() - 1.5D,
+                pos.getX() + 2.5D, pos.getY() + 3.5D, pos.getZ() + 2.5D);
     }
 }

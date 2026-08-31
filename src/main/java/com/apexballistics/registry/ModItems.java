@@ -7,9 +7,15 @@ import com.apexballistics.item.CruiseMissileItem;
 import com.apexballistics.item.MissileItem;
 import com.apexballistics.item.MissileLauncherItem;
 import com.apexballistics.item.TargetDesignatorItem;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -52,7 +58,13 @@ public final class ModItems {
             () -> new BlockItem(ModBlocks.LAUNCH_PAD.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> CRUISE_LAUNCHER = ITEMS.register("cruise_launcher",
-            () -> new BlockItem(ModBlocks.CRUISE_LAUNCHER.get(), new Item.Properties()));
+            () -> new BlockItem(ModBlocks.CRUISE_LAUNCHER.get(), new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+                    tooltip.add(Component.translatable("block.apexballistics.cruise_launcher.tooltip")
+                            .withStyle(ChatFormatting.GRAY));
+                }
+            });
 
     private ModItems() {
     }

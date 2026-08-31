@@ -14,6 +14,7 @@
 
   "block.apexballistics.launch_pad": "Launch Pad",
   "block.apexballistics.cruise_launcher": "Cruise Launcher",
+  "block.apexballistics.cruise_launcher.tooltip": "Place it, then right-click the block to open the launch GUI",
 
   "entity.apexballistics.missile": "Missile",
   "entity.apexballistics.cruise_missile": "Cruise Missile",
@@ -23,11 +24,14 @@
   "item.apexballistics.missile.tooltip.cluster_missile": "Splits into bomblets on impact",
   "item.apexballistics.missile.tooltip.homing_missile": "Steers toward a locked or nearby target",
   "item.apexballistics.missile.tooltip.bunker_missile": "Heavy blast that punches downward",
-  "item.apexballistics.missile.tooltip.ammo": "Load into a launcher or launch pad",
+  "item.apexballistics.missile.tooltip.ammo": "Load into a launcher GUI or a launch pad",
   "item.apexballistics.cruise_missile.tooltip": "Load into a cruise launcher, then set a location",
-  "item.apexballistics.cruise_missile.tooltip.size": "3 blocks tall, 1 block wide — heavy bunker-buster",
+  "item.apexballistics.cruise_missile.tooltip.size": "Large cruise missile — climbs high, then dives on the target",
 
-  "item.apexballistics.missile_launcher.tooltip": "Right-click to fire a missile from your inventory",
+  "item.apexballistics.missile_launcher.tooltip": "Load a missile in the GUI, then right-click to fire",
+  "item.apexballistics.missile_launcher.tooltip.gui": "Sneak-right-click always opens the load GUI",
+  "item.apexballistics.missile_launcher.empty": "Empty — open the GUI and put a missile in the slot",
+  "item.apexballistics.missile_launcher.loaded": "Loaded: %s × %s",
   "item.apexballistics.target_designator.tooltip": "Right-click a block to mark it, then use on a launch pad or cruise launcher",
   "item.apexballistics.target_designator.marked": "Target marked: %s, %s, %s",
   "item.apexballistics.target_designator.target": "Target: %s, %s, %s",
@@ -40,6 +44,8 @@
   "block.apexballistics.launch_pad.target_set": "Launch pad target: %s, %s, %s",
 
   "container.apexballistics.cruise_launcher": "Cruise Launcher",
+  "container.apexballistics.missile_launcher": "Missile Launcher",
+  "gui.apexballistics.missile_launcher.slot_missile": "Put a missile in this slot. Cruise missiles go in the cruise launcher block.",
   "gui.apexballistics.cruise_launcher.put_missile": "Put the missile here",
   "gui.apexballistics.cruise_launcher.put_location": "Put the location here",
   "gui.apexballistics.cruise_launcher.slot_missile": "Put a cruise missile in this slot",

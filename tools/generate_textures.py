@@ -203,6 +203,8 @@ FONT_5X7 = {
     "Y": ["10001", "10001", "01010", "00100", "00100", "00100", "00100"],
     "Z": ["11111", "00001", "00010", "00100", "01000", "10000", "11111"],
     "P": ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
+    "L": ["10000", "10000", "10000", "10000", "10000", "10000", "11111"],
+    "d": ["00001", "00001", "01111", "10001", "10001", "10001", "01111"],
     "a": ["00000", "01110", "00001", "01111", "10001", "10001", "01111"],
     "c": ["00000", "01110", "10001", "10000", "10000", "10001", "01110"],
     "e": ["00000", "01110", "10001", "11111", "10000", "10001", "01110"],
@@ -284,24 +286,39 @@ def draw_cruise_launcher_block():
 
 
 def draw_cruise_entity():
-    # UV unwrap for a 16x48x16 cube at texOffs(0,0) on 64x64:
-    # down 0,0-16,16  up 16,0-32,16
-    # west 0,16-16,64  south 16,16-32,64  east 32,16-48,64  north 48,16-64,64
     img = canvas(64, OLIVE_D)
-    fill(img, 0, 0, 16, 16, SMOKE)          # bottom / exhaust
-    fill(img, 4, 4, 12, 12, EXHAUST)
-    fill(img, 6, 6, 10, 10, WHITE)
-    fill(img, 16, 0, 32, 16, OLIVE_L)       # top / nose
-    fill(img, 20, 4, 28, 12, OLIVE)
-    fill(img, 22, 6, 26, 10, WHITE)
-    for u0 in (0, 16, 32, 48):
-        fill(img, u0, 16, u0 + 16, 64, OLIVE)
-        fill(img, u0, 16, u0 + 16, 24, OLIVE_L)   # nose band
-        fill(img, u0, 36, u0 + 16, 40, ORANGE)    # mid stripe
-        fill(img, u0, 56, u0 + 16, 64, SMOKE)     # exhaust housing
-        fill(img, u0 + 5, 18, u0 + 7, 54, OLIVE_D)
-        fill(img, u0 + 9, 18, u0 + 11, 54, OLIVE_L)
-        fill(img, u0 + 6, 58, u0 + 10, 62, EXHAUST)
+    fill(img, 0, 0, 64, 64, OLIVE)
+    fill(img, 0, 0, 64, 8, OLIVE_L)
+    fill(img, 0, 56, 64, 64, OLIVE_D)
+    fill(img, 0, 24, 64, 32, ORANGE)
+    fill(img, 0, 26, 64, 30, ORANGE_L)
+    for x in range(0, 64, 8):
+        fill(img, x, 0, x + 1, 64, OLIVE_D)
+    fill(img, 48, 0, 64, 64, OLIVE_L)
+    fill(img, 56, 16, 64, 48, WHITE)
+    fill(img, 0, 0, 10, 64, SMOKE)
+    fill(img, 2, 20, 8, 44, EXHAUST)
+    fill(img, 3, 28, 7, 36, WHITE)
+    return img
+
+
+def draw_launcher_gui():
+    img = canvas(256, (0, 0, 0, 0))
+    fill(img, 0, 0, 176, 166, PANEL)
+    rect(img, 0, 0, 176, 166, SLOT_RIM)
+    fill(img, 1, 1, 175, 2, PANEL_L)
+    fill(img, 1, 1, 2, 165, PANEL_L)
+    fill(img, 174, 1, 175, 165, PANEL_D)
+    fill(img, 1, 164, 175, 165, PANEL_D)
+    draw_text(img, 8, 20, "Load a")
+    draw_text(img, 8, 28, "missile")
+    draw_text(img, 8, 36, "here")
+    draw_slot(img, 79, 35)
+    for row in range(3):
+        for col in range(9):
+            draw_slot(img, 7 + col * 18, 83 + row * 18)
+    for col in range(9):
+        draw_slot(img, 7 + col * 18, 141)
     return img
 
 
@@ -419,6 +436,7 @@ def main() -> None:
     write_png(entities / "cruise_missile.png", draw_cruise_entity())
     write_png(ROOT / "assets/apexballistics/textures/gui/cruise_launcher.png", draw_cruise_gui())
     write_png(ROOT / "assets/apexballistics/textures/gui/coord_tool.png", draw_coord_gui())
+    write_png(ROOT / "assets/apexballistics/textures/gui/missile_launcher.png", draw_launcher_gui())
 
     write_png(ROOT / "logo.png", draw_logo())
     print("textures written")

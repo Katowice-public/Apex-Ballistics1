@@ -30,11 +30,14 @@ public class MissileEntity extends AbstractHurtingProjectile {
             SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.INT);
 
     private int maxLife = 200;
-    private int boostTicks;
-    private boolean siloLaunch;
     private boolean exploded;
+    private boolean ballistic;
+    private BallisticFlight.Phase phase = BallisticFlight.Phase.BOOST;
+    private double cruiseAltitude = 80.0D;
     @Nullable
     private BlockPos cruiseTarget;
+    @Nullable
+    private BlockPos launchPos;
     @Nullable
     private UUID lockedTargetId;
     @Nullable
@@ -80,9 +83,16 @@ public class MissileEntity extends AbstractHurtingProjectile {
     }
 
     public void setSiloLaunch(boolean siloLaunch, @Nullable BlockPos cruiseTarget) {
-        this.siloLaunch = siloLaunch;
+        this.ballistic = siloLaunch;
         this.cruiseTarget = cruiseTarget;
-        this.boostTicks = siloLaunch ? 14 : 0;
+        this.launchPos = this.blockPosition();
+        if (siloLaunch) {
+            this.phase = BallisticFlight.Phase.BOOST;
+            this.maxLife = Math.max(this.maxLife, 700);
+            double targetY = cruiseTarget != null ? cruiseTarget.getY() : this.getY();
+            this.cruiseAltitude = BallisticFlight.cruiseAltitude(
+                    this.level(), this.getY(), targetY, ApexConfig.cruiseAltitudeBonus);
+        }
     }
 
     public void setMaxLife(int maxLife) {
@@ -97,17 +107,23 @@ public class MissileEntity extends AbstractHurtingProjectile {
 
     @Override
     public void tick() {
-        if (this.siloLaunch && this.boostTicks > 0) {
-            this.boostTicks--;
-            this.setFlight(new Vec3(0.0D, 1.0D, 0.0D), 0.18D);
-            if (this.boostTicks == 0) {
-                this.setFlight(this.cruiseDirection(), 0.16D);
+        if (this.ballistic && !this.level().isClientSide) {
+            Vec3 dest = this.cruiseTarget != null
+                    ? Vec3.atCenterOf(this.cruiseTarget)
+                    : this.position().add(this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(40.0D));
+            if (this.position().distanceToSqr(dest) < 2.25D && this.phase == BallisticFlight.Phase.DIVE) {
+                this.detonate();
+                return;
             }
+            this.phase = BallisticFlight.nextPhase(this.phase, this.position(), dest, this.cruiseAltitude);
+            this.setFlight(BallisticFlight.desiredDirection(this.phase, this.position(), dest, this.cruiseAltitude),
+                    BallisticFlight.speed(this.phase));
         } else if (!this.level().isClientSide && (this.getWarhead().homing() || this.lockedTargetId != null)) {
             this.steerTowardTarget();
         }
 
         super.tick();
+        MissileOrientation.faceVelocity(this);
 
         if (this.tickCount >= this.maxLife) {
             this.detonate();
@@ -122,16 +138,6 @@ public class MissileEntity extends AbstractHurtingProjectile {
                     this.getZ() - motion.z * 0.5D,
                     0.0D, 0.0D, 0.0D);
         }
-    }
-
-    private Vec3 cruiseDirection() {
-        if (this.cruiseTarget != null) {
-            Vec3 to = Vec3.atCenterOf(this.cruiseTarget).subtract(this.position());
-            if (to.lengthSqr() > 0.0001D) {
-                return to.normalize();
-            }
-        }
-        return this.getDeltaMovement().lengthSqr() < 0.0001D ? new Vec3(0.0D, 0.0D, 1.0D) : this.getDeltaMovement().normalize();
     }
 
     private void steerTowardTarget() {
@@ -212,8 +218,18 @@ public class MissileEntity extends AbstractHurtingProjectile {
 
     @Override
     protected void onHit(HitResult result) {
+        if (this.ballistic && this.shouldIgnoreBallisticHit(result)) {
+            return;
+        }
         super.onHit(result);
         this.detonate();
+    }
+
+    private boolean shouldIgnoreBallisticHit(HitResult result) {
+        if (this.phase == BallisticFlight.Phase.BOOST) {
+            return result.getType() == HitResult.Type.BLOCK || this.tickCount < 12;
+        }
+        return this.tickCount < 12;
     }
 
     private void detonate() {
@@ -298,10 +314,14 @@ public class MissileEntity extends AbstractHurtingProjectile {
         super.addAdditionalSaveData(tag);
         tag.putInt("Warhead", this.getWarhead().ordinal());
         tag.putInt("MaxLife", this.maxLife);
-        tag.putInt("BoostTicks", this.boostTicks);
-        tag.putBoolean("SiloLaunch", this.siloLaunch);
+        tag.putBoolean("Ballistic", this.ballistic);
+        tag.putInt("Phase", this.phase.ordinal());
+        tag.putDouble("CruiseAltitude", this.cruiseAltitude);
         if (this.cruiseTarget != null) {
             tag.putLong("CruiseTarget", this.cruiseTarget.asLong());
+        }
+        if (this.launchPos != null) {
+            tag.putLong("LaunchPos", this.launchPos.asLong());
         }
         if (this.lockedTargetId != null) {
             tag.putUUID("LockedTarget", this.lockedTargetId);
@@ -313,10 +333,16 @@ public class MissileEntity extends AbstractHurtingProjectile {
         super.readAdditionalSaveData(tag);
         this.setWarhead(WarheadType.byId(tag.getInt("Warhead")));
         this.maxLife = tag.contains("MaxLife") ? tag.getInt("MaxLife") : 200;
-        this.boostTicks = tag.getInt("BoostTicks");
-        this.siloLaunch = tag.getBoolean("SiloLaunch");
+        this.ballistic = tag.getBoolean("Ballistic") || tag.getBoolean("SiloLaunch");
+        int phaseId = tag.getInt("Phase");
+        BallisticFlight.Phase[] phases = BallisticFlight.Phase.values();
+        this.phase = phaseId >= 0 && phaseId < phases.length ? phases[phaseId] : BallisticFlight.Phase.BOOST;
+        this.cruiseAltitude = tag.contains("CruiseAltitude") ? tag.getDouble("CruiseAltitude") : 80.0D;
         if (tag.contains("CruiseTarget")) {
             this.cruiseTarget = BlockPos.of(tag.getLong("CruiseTarget"));
+        }
+        if (tag.contains("LaunchPos")) {
+            this.launchPos = BlockPos.of(tag.getLong("LaunchPos"));
         }
         if (tag.hasUUID("LockedTarget")) {
             this.lockedTargetId = tag.getUUID("LockedTarget");

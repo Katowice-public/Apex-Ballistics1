@@ -155,7 +155,7 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
 
         Direction facing = this.getBlockState().getValue(CruiseLauncherBlock.FACING);
         Vec3 spawn = Vec3.atBottomCenterOf(this.worldPosition)
-                .add(facing.getStepX() * 0.5D, 1.15D, facing.getStepZ() * 0.5D);
+                .add(facing.getStepX() * 0.5D, 1.35D, facing.getStepZ() * 0.5D);
         CruiseMissileEntity missile = new CruiseMissileEntity(this.level, spawn.x, spawn.y, spawn.z, new Vec3(0.0D, 1.0D, 0.0D));
         if (player != null) {
             missile.setOwner(player);
@@ -248,6 +248,6 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         BlockPos pos = this.worldPosition;
         Direction facing = this.getBlockState().getValue(CruiseLauncherBlock.FACING);
         BlockPos head = pos.relative(facing);
-        return AABB.encapsulatingFullBlocks(pos, head.above(4));
+        return AABB.encapsulatingFullBlocks(pos.below(), head.above(4).relative(facing, 2).relative(facing.getOpposite(), 2));
     }
 }

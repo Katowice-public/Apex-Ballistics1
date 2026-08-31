@@ -34,18 +34,18 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 
 | Item | What it does |
 | --- | --- |
-| **Missile Launcher** | Right-click to fire a missile from your inventory (offhand first, then the rest). Homing rounds lock onto the mob you are looking at. |
+| **Missile Launcher** | Right-click to open the load GUI if empty, or to fire a missile that is loaded in that GUI. Sneak-right-click always opens the GUI. Does not fire unless a real missile is in the launcher. |
 | **HE Missile** | Standard high-explosive impact. |
 | **Incendiary Missile** | Smaller blast that starts fires. |
 | **Cluster Missile** | Splits into bomblets on impact. |
 | **Homing Missile** | Steers toward a locked or nearby living target. |
 | **Bunker Missile** | Heavy blast that punches downward. |
-| **Cruise Missile** | 3 blocks tall, 1 block wide. Load only in the cruise launcher. Very large blast that punches deep. |
+| **Cruise Missile** | Large missile that sits on the cruise launcher, nose toward the front. Climbs high, flies over, then dives on the target. |
 | **Rocket Fuel** | Crafting ingredient. |
 | **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
 | **Coordinate Tool** | Right-click to open a GUI with X, Y, and Z boxes. Save, then put it in a cruise launcher or use it on a launch pad. |
-| **Launch Pad** | Load a missile, optional designator target, then right-click / use a launcher / pulse redstone to fire. Sneak-right-click ejects the missile. |
-| **Cruise Launcher** | 2 blocks long, 1 block high. Open the GUI, put in a cruise missile, set a location (designator or typed X/Y/Z), then Launch or pulse redstone. |
+| **Launch Pad** | Load a missile, optional designator target, then right-click / pulse redstone to fire. Sneak-right-click ejects the missile. |
+| **Cruise Launcher** | 2 blocks long, 1 block high. **Right-click the placed block** to open the GUI, put in a cruise missile, set a location, then Launch or pulse redstone. |
 
 Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight.
 
@@ -100,6 +100,9 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 **Coordinate tool GUI (256×256 PNG, 176×108 used)**  
 `assets/apexballistics/textures/gui/coord_tool.png`
 
+**Missile launcher GUI (256×256 PNG, 176×166 used)**  
+`assets/apexballistics/textures/gui/missile_launcher.png`
+
 **Sounds**  
 Right now `sounds.json` points at vanilla firework / explode / orb files so the events already play. To use your own `.ogg` files:
 
@@ -121,3 +124,4 @@ Mod logo: `logo.png` at the root of the jar.
 - `homingRange` — how far homing missiles search
 - `cruiseExplosionPower` — cruise missile blast size
 - `cruiseMaxLifetimeTicks` — cruise missile airburst timer
+- `cruiseAltitudeBonus` — how high the missile climbs before flying to the target
