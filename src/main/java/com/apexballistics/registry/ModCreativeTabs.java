@@ -20,14 +20,25 @@ public final class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.MISSILE_LAUNCHER.get());
                         output.accept(ModItems.TARGET_DESIGNATOR.get());
+                        output.accept(ModItems.COORD_TOOL.get());
                         output.accept(ModItems.LAUNCH_PAD.get());
                         output.accept(ModItems.CRUISE_LAUNCHER.get());
                         output.accept(ModItems.ROCKET_FUEL.get());
                         output.accept(ModItems.HE_MISSILE.get());
+                        output.accept(ModItems.HE_MISSILE_T2.get());
+                        output.accept(ModItems.HE_MISSILE_T3.get());
                         output.accept(ModItems.INCENDIARY_MISSILE.get());
+                        output.accept(ModItems.INCENDIARY_MISSILE_T2.get());
+                        output.accept(ModItems.INCENDIARY_MISSILE_T3.get());
                         output.accept(ModItems.CLUSTER_MISSILE.get());
+                        output.accept(ModItems.CLUSTER_MISSILE_T2.get());
+                        output.accept(ModItems.CLUSTER_MISSILE_T3.get());
                         output.accept(ModItems.HOMING_MISSILE.get());
+                        output.accept(ModItems.HOMING_MISSILE_T2.get());
+                        output.accept(ModItems.HOMING_MISSILE_T3.get());
                         output.accept(ModItems.BUNKER_MISSILE.get());
+                        output.accept(ModItems.BUNKER_MISSILE_T2.get());
+                        output.accept(ModItems.BUNKER_MISSILE_T3.get());
                         output.accept(ModItems.CRUISE_MISSILE.get());
                     })
                     .build());

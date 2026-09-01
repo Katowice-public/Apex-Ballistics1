@@ -1,7 +1,9 @@
 package com.apexballistics.registry;
 
 import com.apexballistics.ApexBallistics;
+import com.apexballistics.menu.CoordToolMenu;
 import com.apexballistics.menu.CruiseLauncherMenu;
+import com.apexballistics.menu.MissileLauncherMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,6 +17,16 @@ public final class ModMenus {
     public static final RegistryObject<MenuType<CruiseLauncherMenu>> CRUISE_LAUNCHER = MENUS.register(
             "cruise_launcher",
             () -> IForgeMenuType.create(CruiseLauncherMenu::fromNetwork)
+    );
+
+    public static final RegistryObject<MenuType<CoordToolMenu>> COORD_TOOL = MENUS.register(
+            "coord_tool",
+            () -> IForgeMenuType.create(CoordToolMenu::fromNetwork)
+    );
+
+    public static final RegistryObject<MenuType<MissileLauncherMenu>> MISSILE_LAUNCHER = MENUS.register(
+            "missile_launcher",
+            () -> IForgeMenuType.create(MissileLauncherMenu::fromNetwork)
     );
 
     private ModMenus() {

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "apexballistics:he_missile_t2" },
+    { "item": "apexballistics:rocket_fuel" },
+    { "item": "apexballistics:rocket_fuel" },
+    { "item": "minecraft:gold_block" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:he_missile_t3"
+  }
+}

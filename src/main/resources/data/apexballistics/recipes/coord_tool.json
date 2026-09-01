@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": { "item": "minecraft:compass" },
+    "P": { "item": "minecraft:paper" },
+    "R": { "item": "minecraft:redstone" },
+    "I": { "item": "minecraft:copper_ingot" }
+  },
+  "pattern": [
+    " P ",
+    "ICI",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "apexballistics:coord_tool"
+  }
+}

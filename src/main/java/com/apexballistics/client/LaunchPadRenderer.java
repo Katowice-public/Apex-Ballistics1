@@ -2,6 +2,7 @@ package com.apexballistics.client;
 
 import com.apexballistics.block.LaunchPadBlock;
 import com.apexballistics.blockentity.LaunchPadBlockEntity;
+import com.apexballistics.entity.MissileTier;
 import com.apexballistics.entity.WarheadType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -28,11 +29,16 @@ public class LaunchPadRenderer implements BlockEntityRenderer<LaunchPadBlockEnti
         }
 
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.55D, 0.5D);
+        poseStack.translate(0.5D, 0.95D, 0.5D);
         Direction facing = pad.getBlockState().getValue(LaunchPadBlock.FACING);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
-        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-        poseStack.scale(0.65F, 0.65F, 0.65F);
+        // Same arrow-style stack the in-flight renderer uses when going straight up.
+        poseStack.mulPose(Axis.YP.rotationDegrees(facing.toYRot() - 90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+        MissileTier tier = pad.getTier();
+        float thick = 1.40F * tier.thicknessScale();
+        float length = 1.55F * tier.lengthScale();
+        poseStack.scale(thick, thick, length);
         VertexConsumer consumer = buffer.getBuffer(this.model.renderType(MissileRenderer.textureFor(warhead)));
         this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();

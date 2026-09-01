@@ -4,10 +4,22 @@ A **Minecraft 1.21.1 Forge** mod that adds missiles, a handheld launcher, a targ
 
 Placeholder 16×16 item textures and a simple in-code missile model are included so the mod is playable now. You can drop in real models, textures, and `.ogg` sounds later without changing the Java.
 
+## The jar (this is the file you install)
+
+Download **[`jars/apexballistics-1.0.0.jar`](jars/apexballistics-1.0.0.jar)** from this repo and put it in your Minecraft `mods` folder (Forge 1.21.1). That is the only file you need.
+
+To rebuild from source (Java 21):
+
+```bash
+./gradlew build
+```
+
+That writes `build/libs/apexballistics-1.0.0.jar` (also copied to `jars/`).
+
 ## Install
 
-1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (52.1.16 or newer).
-2. Build or grab `apexballistics-1.0.0.jar` from `build/libs`.
+1. Install [Minecraft Forge 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html) (**52.1.14** or newer).
+2. Download **[`jars/apexballistics-1.0.0.jar`](jars/apexballistics-1.0.0.jar)** (or run `./gradlew build` and take `build/libs/apexballistics-1.0.0.jar`).
 3. Put that **one jar** in your `mods` folder.
 
 Build from source (Java 21):
@@ -22,33 +34,33 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 
 | Item | What it does |
 | --- | --- |
-| **Missile Launcher** | Right-click to fire a missile from your inventory (offhand first, then the rest). Homing rounds lock onto the mob you are looking at. |
-| **HE Missile** | Standard high-explosive impact. |
-| **Incendiary Missile** | Smaller blast that starts fires. |
-| **Cluster Missile** | Splits into bomblets on impact. |
-| **Homing Missile** | Steers toward a locked or nearby living target. |
-| **Bunker Missile** | Heavy blast that punches downward. |
-| **Cruise Missile** | 3 blocks tall, 1 block wide. Load only in the cruise launcher. Very large blast that punches deep. |
+| **Missile Launcher** | Right-click to open the load GUI if empty, or to fire a missile that is loaded in that GUI. Sneak-right-click always opens the GUI. **Unload** returns the missile to your inventory. Does not fire unless a real missile is in the launcher. |
+| **HE / Incendiary / Cluster / Homing / Bunker Missile** | Three marks. Mk I is the base craft. Mk II and Mk III fly a taller rainbow arc, hit harder, and are physically longer. |
+| **Cruise Missile** | Large missile that sits on the cruise launcher, nose toward the front. Climbs straight up, flies over, then dives on the target. |
 | **Rocket Fuel** | Crafting ingredient. |
 | **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
-| **Launch Pad** | Load a missile, optional designator target, then right-click / use a launcher / pulse redstone to fire. Sneak-right-click ejects the missile. |
-| **Cruise Launcher** | 2 blocks long, 1 block high. Open the GUI, put in a cruise missile, set a location (designator or typed X/Y/Z), then Launch or pulse redstone. |
+| **Coordinate Tool** | Right-click to open a GUI with X, Y, and Z boxes. Save, then put it in a cruise launcher or use it on a launch pad. |
+| **Launch Pad** | Load a missile, optional designator target, then right-click / pulse redstone to fire. Sneak-right-click ejects the missile. |
+| **Cruise Launcher** | 2 blocks long, 1 block high. **Right-click the placed block** to open the GUI, put in a cruise missile, set a location, then Launch. **Unload** or sneak-right-click takes the missile back. |
 
-Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight.
+Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight. **Regular missiles** (the handheld / launch-pad marks) fly a smooth rainbow arc — they take off at about 45°, climb, then dive. Higher marks climb higher and fly farther. **Cruise missiles** still go straight up off the rail, then over, then down; their pitch eases into that climb instead of snapping 0°→90°.
 
 Blast size and whether explosions break blocks are in `config/apexballistics-common.toml`.
 
 ## Crafting
 
 - **Rocket Fuel** — gunpowder + coal/charcoal + blaze powder (makes 3)
-- **HE Missile** — iron, TNT, rocket fuel, redstone
-- **Incendiary** — HE missile + fire charge
-- **Cluster** — HE missile + 2 firework stars
-- **Homing** — HE missile + eye of ender + redstone
-- **Bunker** — HE missile + obsidian + TNT
+- **HE Missile Mk I** — iron, TNT, rocket fuel, redstone
+- **Incendiary Mk I** — HE missile + fire charge
+- **Cluster Mk I** — HE missile + 2 firework stars
+- **Homing Mk I** — HE missile + eye of ender + redstone
+- **Bunker Mk I** — HE missile + obsidian + TNT
+- **Mk II** (any warhead) — that Mk I missile + rocket fuel + iron block
+- **Mk III** (any warhead) — that Mk II missile + 2 rocket fuel + gold block
 - **Cruise Missile** — bunker missile, TNT, iron, rocket fuel
 - **Launcher** — iron, dispenser, blaze rod, lever
 - **Designator** — copper, redstone, 2 spyglasses
+- **Coordinate Tool** — compass, paper, copper, redstone
 - **Launch Pad** — iron blocks, dispenser, observer, copper
 - **Cruise Launcher** — launch pad, 2 dispensers, iron, copper
 
@@ -63,6 +75,7 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 
 - `missile_launcher.png`
 - `target_designator.png`
+- `coord_tool.png`
 - `rocket_fuel.png`
 - `he_missile.png`
 - `incendiary_missile.png`
@@ -79,8 +92,14 @@ When you have better art or sound, overwrite these paths inside the jar (or in a
 **Missile body (64×64 PNG)**  
 `assets/apexballistics/textures/entity/` — same names as the missiles, plus `bomblet.png` and `cruise_missile.png`
 
-**Cruise launcher GUI (256×256 PNG, 176×202 used)**  
+**Cruise launcher GUI (256×256 PNG, 176×212 used)**  
 `assets/apexballistics/textures/gui/cruise_launcher.png`
+
+**Coordinate tool GUI (256×256 PNG, 176×108 used)**  
+`assets/apexballistics/textures/gui/coord_tool.png`
+
+**Missile launcher GUI (256×256 PNG, 176×166 used)**  
+`assets/apexballistics/textures/gui/missile_launcher.png`
 
 **Sounds**  
 Right now `sounds.json` points at vanilla firework / explode / orb files so the events already play. To use your own `.ogg` files:
@@ -103,3 +122,4 @@ Mod logo: `logo.png` at the root of the jar.
 - `homingRange` — how far homing missiles search
 - `cruiseExplosionPower` — cruise missile blast size
 - `cruiseMaxLifetimeTicks` — cruise missile airburst timer
+- `cruiseAltitudeBonus` — how high the missile climbs before flying to the target

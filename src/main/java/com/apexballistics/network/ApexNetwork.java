@@ -19,6 +19,11 @@ public final class ApexNetwork {
                 .decoder(CruiseLauncherFirePacket::decode)
                 .consumerMainThread(CruiseLauncherFirePacket::handle)
                 .add();
+        CHANNEL.messageBuilder(CoordToolSavePacket.class, 1)
+                .encoder(CoordToolSavePacket::encode)
+                .decoder(CoordToolSavePacket::decode)
+                .consumerMainThread(CoordToolSavePacket::handle)
+                .add();
         CHANNEL.build();
     }
 }

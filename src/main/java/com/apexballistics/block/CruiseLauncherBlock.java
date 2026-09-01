@@ -159,6 +159,12 @@ public class CruiseLauncherBlock extends BaseEntityBlock {
         if (launcher == null) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+        if (player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                launcher.ejectMissile(player);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
         if (stack.getItem() instanceof TargetDesignatorItem) {
             BlockPos target = stack.get(ModDataComponents.TARGET_POS.get());
             if (target != null && !level.isClientSide) {
@@ -171,6 +177,16 @@ public class CruiseLauncherBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        CruiseLauncherBlockEntity launcher = this.getBaseEntity(level, pos, state);
+        if (launcher == null) {
+            return InteractionResult.PASS;
+        }
+        if (player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                launcher.ejectMissile(player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
         this.openGui(level, pos, state, player);
         return InteractionResult.sidedSuccess(level.isClientSide());
     }

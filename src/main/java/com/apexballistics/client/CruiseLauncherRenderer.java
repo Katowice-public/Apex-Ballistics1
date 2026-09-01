@@ -29,11 +29,17 @@ public class CruiseLauncherRenderer implements BlockEntityRenderer<CruiseLaunche
         }
         Direction facing = launcher.getBlockState().getValue(CruiseLauncherBlock.FACING);
         poseStack.pushPose();
-        poseStack.translate(0.5D + facing.getStepX() * 0.5D, 1.0D, 0.5D + facing.getStepZ() * 0.5D);
+        // Sit on top of the 1-block-high rails, centered on the 2-block bed, nose toward the front.
+        poseStack.translate(0.5D + facing.getStepX() * 0.5D, 1.38D, 0.5D + facing.getStepZ() * 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
         ResourceLocation texture = ApexBallistics.id("textures/entity/cruise_missile.png");
         VertexConsumer consumer = buffer.getBuffer(this.model.renderType(texture));
         this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
+    }
+
+    @Override
+    public boolean shouldRenderOffScreen(CruiseLauncherBlockEntity launcher) {
+        return true;
     }
 }

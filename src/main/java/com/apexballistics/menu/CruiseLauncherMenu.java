@@ -2,7 +2,7 @@ package com.apexballistics.menu;
 
 import com.apexballistics.blockentity.CruiseLauncherBlockEntity;
 import com.apexballistics.item.CruiseMissileItem;
-import com.apexballistics.item.TargetDesignatorItem;
+import com.apexballistics.item.LocationItems;
 import com.apexballistics.registry.ModBlocks;
 import com.apexballistics.registry.ModMenus;
 import net.minecraft.core.BlockPos;
@@ -103,7 +103,7 @@ public class CruiseLauncherMenu extends AbstractContainerMenu {
             if (!this.moveItemStackTo(stack, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (stack.getItem() instanceof TargetDesignatorItem) {
+        } else if (LocationItems.isLocationItem(stack)) {
             if (!this.moveItemStackTo(stack, 1, 2, false)) {
                 return ItemStack.EMPTY;
             }
@@ -121,5 +121,21 @@ public class CruiseLauncherMenu extends AbstractContainerMenu {
             slot.setChanged();
         }
         return result;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (id == 1) {
+            this.unloadMissile(player);
+            return true;
+        }
+        return false;
+    }
+
+    public void unloadMissile(Player player) {
+        if (!this.stillValid(player)) {
+            return;
+        }
+        this.launcher.ejectMissile(player);
     }
 }

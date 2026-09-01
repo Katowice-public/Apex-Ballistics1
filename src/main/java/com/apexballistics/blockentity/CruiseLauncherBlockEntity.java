@@ -3,7 +3,7 @@ package com.apexballistics.blockentity;
 import com.apexballistics.block.CruiseLauncherBlock;
 import com.apexballistics.entity.CruiseMissileEntity;
 import com.apexballistics.item.CruiseMissileItem;
-import com.apexballistics.item.TargetDesignatorItem;
+import com.apexballistics.item.LocationItems;
 import com.apexballistics.menu.CruiseLauncherMenu;
 import com.apexballistics.registry.ModBlockEntities;
 import com.apexballistics.registry.ModDataComponents;
@@ -43,7 +43,7 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
                 return stack.getItem() instanceof CruiseMissileItem;
             }
             if (slot == SLOT_LOCATION) {
-                return stack.getItem() instanceof TargetDesignatorItem;
+                return LocationItems.isLocationItem(stack);
             }
             return false;
         }
@@ -57,7 +57,7 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         protected void onContentsChanged(int slot) {
             if (slot == SLOT_LOCATION) {
                 ItemStack stack = this.getStackInSlot(SLOT_LOCATION);
-                if (stack.getItem() instanceof TargetDesignatorItem) {
+                if (LocationItems.isLocationItem(stack)) {
                     BlockPos marked = stack.get(ModDataComponents.TARGET_POS.get());
                     if (marked != null) {
                         CruiseLauncherBlockEntity.this.setTarget(marked);
@@ -155,8 +155,11 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
 
         Direction facing = this.getBlockState().getValue(CruiseLauncherBlock.FACING);
         Vec3 spawn = Vec3.atBottomCenterOf(this.worldPosition)
-                .add(facing.getStepX() * 0.5D, 1.15D, facing.getStepZ() * 0.5D);
+                .add(facing.getStepX() * 0.5D, 1.35D, facing.getStepZ() * 0.5D);
         CruiseMissileEntity missile = new CruiseMissileEntity(this.level, spawn.x, spawn.y, spawn.z, new Vec3(0.0D, 1.0D, 0.0D));
+        missile.setLaunchYaw(facing.toYRot());
+        missile.setXRot(0.0F);
+        missile.xRotO = 0.0F;
         if (player != null) {
             missile.setOwner(player);
         }
@@ -169,6 +172,18 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         }
         this.sync();
         return true;
+    }
+
+    public void ejectMissile(Player player) {
+        ItemStack stack = this.items.extractItem(SLOT_MISSILE, 64, false);
+        if (stack.isEmpty()) {
+            return;
+        }
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        }
+        player.displayClientMessage(Component.translatable("block.apexballistics.launch_pad.unloaded"), true);
+        this.sync();
     }
 
     public void dropContents() {
@@ -248,6 +263,6 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         BlockPos pos = this.worldPosition;
         Direction facing = this.getBlockState().getValue(CruiseLauncherBlock.FACING);
         BlockPos head = pos.relative(facing);
-        return AABB.encapsulatingFullBlocks(pos, head.above(4));
+        return AABB.encapsulatingFullBlocks(pos.below(), head.above(4).relative(facing, 2).relative(facing.getOpposite(), 2));
     }
 }

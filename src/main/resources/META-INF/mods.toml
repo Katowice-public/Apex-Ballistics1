@@ -19,7 +19,7 @@ accessTransformers = []
 [[dependencies.apexballistics]]
     modId="forge"
     mandatory=true
-    versionRange="[52.1.16,)"
+    versionRange="[52.1.14,)"
     ordering="NONE"
     side="BOTH"
 

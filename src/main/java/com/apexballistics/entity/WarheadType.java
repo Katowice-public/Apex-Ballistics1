@@ -4,12 +4,12 @@ import com.apexballistics.ApexBallistics;
 import net.minecraft.resources.ResourceLocation;
 
 public enum WarheadType {
-    HE("he_missile", 4.0F, false, false),
-    INCENDIARY("incendiary_missile", 2.6F, true, false),
-    CLUSTER("cluster_missile", 2.2F, false, false),
-    HOMING("homing_missile", 3.6F, false, true),
-    BUNKER("bunker_missile", 5.5F, false, false),
-    BOMBLET("bomblet", 1.7F, false, false);
+    HE("he_missile", 6.5F, false, false),
+    INCENDIARY("incendiary_missile", 6.5F, true, false),
+    CLUSTER("cluster_missile", 6.5F, false, false),
+    HOMING("homing_missile", 6.5F, false, true),
+    BUNKER("bunker_missile", 6.5F, false, false),
+    BOMBLET("bomblet", 2.2F, false, false);
 
     private final String itemId;
     private final float explosionPower;

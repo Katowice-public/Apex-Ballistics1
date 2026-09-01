@@ -23,7 +23,7 @@ public class ApexConfig {
 
     private static final ForgeConfigSpec.IntValue MAX_LIFETIME = BUILDER
             .comment("Ticks a missile can fly before it airbursts.")
-            .defineInRange("maxLifetimeTicks", 200, 20, 1200);
+            .defineInRange("maxLifetimeTicks", 400, 20, 1200);
 
     private static final ForgeConfigSpec.DoubleValue HOMING_RANGE = BUILDER
             .comment("How far homing missiles search for a living target, in blocks.")
@@ -35,17 +35,22 @@ public class ApexConfig {
 
     private static final ForgeConfigSpec.IntValue CRUISE_LIFETIME = BUILDER
             .comment("Ticks a cruise missile can fly before it airbursts.")
-            .defineInRange("cruiseMaxLifetimeTicks", 800, 40, 2400);
+            .defineInRange("cruiseMaxLifetimeTicks", 1200, 40, 2400);
+
+    private static final ForgeConfigSpec.DoubleValue CRUISE_ALTITUDE = BUILDER
+            .comment("How many blocks above the higher of launcher/target the missile climbs before flying over.")
+            .defineInRange("cruiseAltitudeBonus", 96.0D, 24.0D, 240.0D);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean griefing = true;
     public static float powerMultiplier = 1.0F;
     public static int launcherCooldownTicks = 25;
-    public static int maxLifetimeTicks = 200;
+    public static int maxLifetimeTicks = 400;
     public static double homingRange = 32.0D;
     public static float cruiseExplosionPower = 16.0F;
-    public static int cruiseMaxLifetimeTicks = 800;
+    public static int cruiseMaxLifetimeTicks = 1200;
+    public static double cruiseAltitudeBonus = 96.0D;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -59,5 +64,6 @@ public class ApexConfig {
         homingRange = HOMING_RANGE.get();
         cruiseExplosionPower = CRUISE_POWER.get().floatValue();
         cruiseMaxLifetimeTicks = CRUISE_LIFETIME.get();
+        cruiseAltitudeBonus = CRUISE_ALTITUDE.get();
     }
 }

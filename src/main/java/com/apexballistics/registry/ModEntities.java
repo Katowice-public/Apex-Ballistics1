@@ -15,15 +15,15 @@ public final class ModEntities {
 
     public static final RegistryObject<EntityType<MissileEntity>> MISSILE = ENTITY_TYPES.register("missile",
             () -> EntityType.Builder.<MissileEntity>of(MissileEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(10)
+                    .sized(0.85F, 0.85F)
+                    .clientTrackingRange(16)
                     .updateInterval(1)
                     .fireImmune()
                     .build("apexballistics:missile"));
 
     public static final RegistryObject<EntityType<CruiseMissileEntity>> CRUISE_MISSILE = ENTITY_TYPES.register("cruise_missile",
             () -> EntityType.Builder.<CruiseMissileEntity>of(CruiseMissileEntity::new, MobCategory.MISC)
-                    .sized(1.0F, 3.0F)
+                    .sized(1.4F, 0.9F)
                     .clientTrackingRange(16)
                     .updateInterval(1)
                     .fireImmune()
