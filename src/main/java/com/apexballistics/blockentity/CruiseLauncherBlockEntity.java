@@ -171,6 +171,18 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         return true;
     }
 
+    public void ejectMissile(Player player) {
+        ItemStack stack = this.items.extractItem(SLOT_MISSILE, 64, false);
+        if (stack.isEmpty()) {
+            return;
+        }
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        }
+        player.displayClientMessage(Component.translatable("block.apexballistics.launch_pad.unloaded"), true);
+        this.sync();
+    }
+
     public void dropContents() {
         if (this.level == null) {
             return;

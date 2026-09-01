@@ -46,7 +46,12 @@ public class MissileLauncherMenu extends AbstractContainerMenu {
         }
         this.loading = false;
 
-        this.addSlot(new SlotItemHandler(this.missile, 0, 80, 36));
+        this.addSlot(new SlotItemHandler(this.missile, 0, 80, 36) {
+            @Override
+            public boolean mayPickup(Player player) {
+                return true;
+            }
+        });
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -111,5 +116,28 @@ public class MissileLauncherMenu extends AbstractContainerMenu {
             slot.setChanged();
         }
         return result;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (id == 0) {
+            this.unloadToInventory(player);
+            return true;
+        }
+        return false;
+    }
+
+    public void unloadToInventory(Player player) {
+        if (!this.stillValid(player)) {
+            return;
+        }
+        ItemStack ammo = this.missile.extractItem(0, 64, false);
+        if (ammo.isEmpty()) {
+            return;
+        }
+        if (!player.getInventory().add(ammo)) {
+            player.drop(ammo, false);
+        }
+        this.save(player);
     }
 }

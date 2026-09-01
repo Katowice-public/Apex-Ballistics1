@@ -34,7 +34,7 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 
 | Item | What it does |
 | --- | --- |
-| **Missile Launcher** | Right-click to open the load GUI if empty, or to fire a missile that is loaded in that GUI. Sneak-right-click always opens the GUI. Does not fire unless a real missile is in the launcher. |
+| **Missile Launcher** | Right-click to open the load GUI if empty, or to fire a missile that is loaded in that GUI. Sneak-right-click always opens the GUI. **Unload** returns the missile to your inventory. Does not fire unless a real missile is in the launcher. |
 | **HE Missile** | Standard high-explosive impact. |
 | **Incendiary Missile** | Smaller blast that starts fires. |
 | **Cluster Missile** | Splits into bomblets on impact. |
@@ -45,7 +45,7 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 | **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
 | **Coordinate Tool** | Right-click to open a GUI with X, Y, and Z boxes. Save, then put it in a cruise launcher or use it on a launch pad. |
 | **Launch Pad** | Load a missile, optional designator target, then right-click / pulse redstone to fire. Sneak-right-click ejects the missile. |
-| **Cruise Launcher** | 2 blocks long, 1 block high. **Right-click the placed block** to open the GUI, put in a cruise missile, set a location, then Launch or pulse redstone. |
+| **Cruise Launcher** | 2 blocks long, 1 block high. **Right-click the placed block** to open the GUI, put in a cruise missile, set a location, then Launch. **Unload** or sneak-right-click takes the missile back. |
 
 Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight.
 

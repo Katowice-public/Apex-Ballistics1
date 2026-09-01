@@ -13,7 +13,10 @@ public final class MissileOrientation {
      * Call after {@code super.tick()} so it wins over fireball rotation.
      */
     public static void faceVelocity(Entity entity) {
-        Vec3 motion = entity.getDeltaMovement();
+        faceDirection(entity, entity.getDeltaMovement());
+    }
+
+    public static void faceDirection(Entity entity, Vec3 motion) {
         if (motion.lengthSqr() < 1.0E-8D) {
             return;
         }

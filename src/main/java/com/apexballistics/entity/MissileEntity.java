@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
@@ -51,8 +52,10 @@ public class MissileEntity extends AbstractHurtingProjectile {
     public MissileEntity(Level level, LivingEntity owner, Vec3 direction, WarheadType warhead) {
         super(ModEntities.MISSILE.get(), owner, direction.normalize(), level);
         this.setWarhead(warhead);
-        this.setPos(owner.getX(), owner.getEyeY() - 0.1D, owner.getZ());
-        this.setFlight(direction, 0.16D);
+        this.setPos(owner.getX(), owner.getEyeY() - 0.15D, owner.getZ());
+        this.setFlight(direction, 0.72D);
+        this.yRotO = this.getYRot();
+        this.xRotO = this.getXRot();
         this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
     }
 
@@ -64,9 +67,14 @@ public class MissileEntity extends AbstractHurtingProjectile {
     }
 
     private void setFlight(Vec3 direction, double power) {
-        this.accelerationPower = power;
-        this.setDeltaMovement(direction.normalize().scale(power));
+        if (direction.lengthSqr() < 1.0E-8D) {
+            return;
+        }
+        Vec3 n = direction.normalize();
+        this.accelerationPower = 0.05D;
+        this.setDeltaMovement(n.scale(power));
         this.hasImpulse = true;
+        MissileOrientation.faceDirection(this, n);
     }
 
     public void setWarhead(WarheadType warhead) {
@@ -246,19 +254,65 @@ public class MissileEntity extends AbstractHurtingProjectile {
 
         this.level().explode(this, this.getX(), this.getY(), this.getZ(), power, fire, interaction);
 
+        if (warhead == WarheadType.HE || warhead == WarheadType.HOMING || warhead == WarheadType.INCENDIARY) {
+            this.explodeSatellites(power, fire, interaction);
+        }
+
         if (warhead == WarheadType.BUNKER) {
             this.level().explode(this, this.getX(), this.getY() - 2.0D, this.getZ(),
                     power * 0.85F, false, interaction);
+            this.explodeSatellites(power * 0.7F, false, interaction);
         }
 
         if (warhead == WarheadType.CLUSTER) {
             this.spawnBomblets();
         }
 
+        if (warhead == WarheadType.INCENDIARY) {
+            this.spillLava();
+        }
+
         this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
                 ModSounds.MISSILE_EXPLODE.get(), SoundSource.BLOCKS, 1.4F,
                 0.8F + this.random.nextFloat() * 0.25F);
         this.discard();
+    }
+
+    private void explodeSatellites(float power, boolean fire, Level.ExplosionInteraction interaction) {
+        for (int i = 0; i < 5; i++) {
+            double ox = (this.random.nextDouble() - 0.5D) * 3.2D;
+            double oz = (this.random.nextDouble() - 0.5D) * 3.2D;
+            this.level().explode(this, this.getX() + ox, this.getY() - 0.4D, this.getZ() + oz,
+                    Math.max(2.2F, power * 0.34F),
+                    fire, interaction);
+        }
+    }
+
+    private void spillLava() {
+        if (!ApexConfig.griefing) {
+            return;
+        }
+        Level level = this.level();
+        BlockPos origin = this.blockPosition();
+        int[][] offsets = {
+                {0, 0, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1},
+                {0, -1, 0}, {0, -2, 0}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1}, {0, -1, -1}
+        };
+        for (int[] offset : offsets) {
+            BlockPos pos = origin.offset(offset[0], offset[1], offset[2]);
+            if (!level.getWorldBorder().isWithinBounds(pos)
+                    || pos.getY() < level.getMinBuildHeight()
+                    || pos.getY() >= level.getMaxBuildHeight()) {
+                continue;
+            }
+            var state = level.getBlockState(pos);
+            if (state.getDestroySpeed(level, pos) < 0.0F) {
+                continue;
+            }
+            if (state.isAir() || state.canBeReplaced()) {
+                level.setBlock(pos, Blocks.LAVA.defaultBlockState(), 3);
+            }
+        }
     }
 
     private void spawnBomblets() {

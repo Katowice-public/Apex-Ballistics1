@@ -3,6 +3,7 @@ package com.apexballistics.client;
 import com.apexballistics.ApexBallistics;
 import com.apexballistics.menu.MissileLauncherMenu;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +22,21 @@ public class MissileLauncherScreen extends AbstractContainerScreen<MissileLaunch
         this.titleLabelY = 6;
         this.inventoryLabelX = 8;
         this.inventoryLabelY = 72;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.addRenderableWidget(Button.builder(
+                Component.translatable("gui.apexballistics.missile_launcher.unload"),
+                button -> this.unload()
+        ).bounds(this.leftPos + 102, this.topPos + 35, 66, 18).build());
+    }
+
+    private void unload() {
+        if (this.minecraft != null && this.minecraft.gameMode != null) {
+            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 0);
+        }
     }
 
     @Override

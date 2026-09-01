@@ -17,8 +17,6 @@ import net.minecraftforge.network.PacketDistributor;
 public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncherMenu> {
     private static final ResourceLocation TEXTURE = ApexBallistics.id("textures/gui/cruise_launcher.png");
     private static final int LABEL_COLOR = 0x404040;
-    private static final int STATUS_COLOR = 0x2E4A28;
-    private static final int STATUS_MAX_WIDTH = 64;
 
     private EditBox xBox;
     private EditBox yBox;
@@ -55,6 +53,10 @@ public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncher
                 Component.translatable("gui.apexballistics.cruise_launcher.launch"),
                 button -> this.sendLaunch()
         ).bounds(this.leftPos + 80, this.topPos + 94, 88, 16).build());
+        this.addRenderableWidget(Button.builder(
+                Component.translatable("gui.apexballistics.cruise_launcher.unload"),
+                button -> this.unload()
+        ).bounds(this.leftPos + 8, this.topPos + 94, 68, 16).build());
     }
 
     private EditBox makeCoordBox(int x, int y, int value, String narrationKey) {
@@ -83,6 +85,12 @@ public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncher
             return Integer.parseInt(box.getValue().trim());
         } catch (NumberFormatException ignored) {
             return fallback;
+        }
+    }
+
+    private void unload() {
+        if (this.minecraft != null && this.minecraft.gameMode != null) {
+            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 1);
         }
     }
 
@@ -137,12 +145,6 @@ public class CruiseLauncherScreen extends AbstractContainerScreen<CruiseLauncher
         graphics.drawString(this.font, Component.translatable("gui.apexballistics.cruise_launcher.y"), 72, 59, LABEL_COLOR, false);
         graphics.drawString(this.font, Component.translatable("gui.apexballistics.cruise_launcher.z"), 72, 77, LABEL_COLOR, false);
         graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, LABEL_COLOR, false);
-
-        Component status = this.menu.hasMissileLoaded()
-                ? Component.translatable("gui.apexballistics.cruise_launcher.ready")
-                : Component.translatable("gui.apexballistics.cruise_launcher.missing_missile");
-        String clipped = this.font.plainSubstrByWidth(status.getString(), STATUS_MAX_WIDTH);
-        graphics.drawString(this.font, clipped, 8, 97, STATUS_COLOR, false);
     }
 
     @Override

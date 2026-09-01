@@ -122,4 +122,20 @@ public class CruiseLauncherMenu extends AbstractContainerMenu {
         }
         return result;
     }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (id == 1) {
+            this.unloadMissile(player);
+            return true;
+        }
+        return false;
+    }
+
+    public void unloadMissile(Player player) {
+        if (!this.stillValid(player)) {
+            return;
+        }
+        this.launcher.ejectMissile(player);
+    }
 }
