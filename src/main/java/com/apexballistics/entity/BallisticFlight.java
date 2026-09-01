@@ -54,9 +54,9 @@ public final class BallisticFlight {
 
     public static double speed(Phase phase) {
         return switch (phase) {
-            case BOOST -> 0.85D;
-            case CRUISE -> 1.15D;
-            case DIVE -> 1.4D;
+            case BOOST -> 1.45D;
+            case CRUISE -> 2.05D;
+            case DIVE -> 2.45D;
         };
     }
 }
