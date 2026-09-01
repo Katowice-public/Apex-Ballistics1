@@ -53,10 +53,22 @@ public class MissileLauncherItem extends Item {
         if (!level.isClientSide) {
             WarheadType warhead = missileItem.getWarhead();
             MissileEntity missile = new MissileEntity(level, player, player.getLookAngle(), warhead);
-            LivingEntity locked = pickLookTarget(player, 64.0D);
+            missile.setTier(missileItem.getTier());
+            LivingEntity locked = pickLookTarget(player, 96.0D);
             if (locked != null) {
                 missile.setLockedTarget(locked);
             }
+            Vec3 look = player.getLookAngle();
+            Vec3 horiz = new Vec3(look.x, 0.0D, look.z);
+            float yaw = player.getYRot();
+            if (horiz.lengthSqr() > 1.0E-6D) {
+                horiz = horiz.normalize();
+                yaw = (float) (Math.toDegrees(Math.atan2(-horiz.x, horiz.z)));
+            }
+            Vec3 impact = locked != null
+                    ? locked.position()
+                    : player.position().add(horiz.scale(missileItem.getTier().range()));
+            missile.startArc(yaw, impact, false);
             level.addFreshEntity(missile);
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     ModSounds.MISSILE_LAUNCH.get(), SoundSource.PLAYERS, 1.0F,

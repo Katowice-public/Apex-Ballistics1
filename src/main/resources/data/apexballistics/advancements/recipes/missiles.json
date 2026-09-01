@@ -14,10 +14,20 @@
   "rewards": {
     "recipes": [
       "apexballistics:he_missile",
+      "apexballistics:he_missile_t2",
+      "apexballistics:he_missile_t3",
       "apexballistics:incendiary_missile",
+      "apexballistics:incendiary_missile_t2",
+      "apexballistics:incendiary_missile_t3",
       "apexballistics:cluster_missile",
+      "apexballistics:cluster_missile_t2",
+      "apexballistics:cluster_missile_t3",
       "apexballistics:homing_missile",
+      "apexballistics:homing_missile_t2",
+      "apexballistics:homing_missile_t3",
       "apexballistics:bunker_missile",
+      "apexballistics:bunker_missile_t2",
+      "apexballistics:bunker_missile_t3",
       "apexballistics:cruise_missile"
     ]
   }

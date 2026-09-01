@@ -23,7 +23,7 @@ public class ApexConfig {
 
     private static final ForgeConfigSpec.IntValue MAX_LIFETIME = BUILDER
             .comment("Ticks a missile can fly before it airbursts.")
-            .defineInRange("maxLifetimeTicks", 200, 20, 1200);
+            .defineInRange("maxLifetimeTicks", 400, 20, 1200);
 
     private static final ForgeConfigSpec.DoubleValue HOMING_RANGE = BUILDER
             .comment("How far homing missiles search for a living target, in blocks.")
@@ -46,7 +46,7 @@ public class ApexConfig {
     public static boolean griefing = true;
     public static float powerMultiplier = 1.0F;
     public static int launcherCooldownTicks = 25;
-    public static int maxLifetimeTicks = 200;
+    public static int maxLifetimeTicks = 400;
     public static double homingRange = 32.0D;
     public static float cruiseExplosionPower = 16.0F;
     public static int cruiseMaxLifetimeTicks = 1200;

@@ -15,8 +15,8 @@ public final class ModEntities {
 
     public static final RegistryObject<EntityType<MissileEntity>> MISSILE = ENTITY_TYPES.register("missile",
             () -> EntityType.Builder.<MissileEntity>of(MissileEntity::new, MobCategory.MISC)
-                    .sized(0.75F, 0.75F)
-                    .clientTrackingRange(10)
+                    .sized(0.85F, 0.85F)
+                    .clientTrackingRange(16)
                     .updateInterval(1)
                     .fireImmune()
                     .build("apexballistics:missile"));

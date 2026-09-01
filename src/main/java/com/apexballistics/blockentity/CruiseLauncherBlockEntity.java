@@ -157,10 +157,9 @@ public class CruiseLauncherBlockEntity extends BlockEntity implements MenuProvid
         Vec3 spawn = Vec3.atBottomCenterOf(this.worldPosition)
                 .add(facing.getStepX() * 0.5D, 1.35D, facing.getStepZ() * 0.5D);
         CruiseMissileEntity missile = new CruiseMissileEntity(this.level, spawn.x, spawn.y, spawn.z, new Vec3(0.0D, 1.0D, 0.0D));
-        missile.setYRot(facing.toYRot());
-        missile.setXRot(90.0F);
-        missile.yRotO = facing.toYRot();
-        missile.xRotO = 90.0F;
+        missile.setLaunchYaw(facing.toYRot());
+        missile.setXRot(0.0F);
+        missile.xRotO = 0.0F;
         if (player != null) {
             missile.setOwner(player);
         }

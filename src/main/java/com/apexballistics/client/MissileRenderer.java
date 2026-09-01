@@ -1,6 +1,7 @@
 package com.apexballistics.client;
 
 import com.apexballistics.entity.MissileEntity;
+import com.apexballistics.entity.MissileTier;
 import com.apexballistics.entity.WarheadType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -25,7 +26,10 @@ public class MissileRenderer extends EntityRenderer<MissileEntity> {
         poseStack.pushPose();
         poseStack.translate(0.0D, entity.getBbHeight() * 0.5D, 0.0D);
         MissileRenderUtil.orientArrowStyle(poseStack, entity, entityYaw, partialTicks);
-        poseStack.scale(1.7F, 1.7F, 1.7F);
+        MissileTier tier = entity.getTier();
+        float thick = 1.55F * tier.thicknessScale();
+        float length = 1.70F * tier.lengthScale();
+        poseStack.scale(thick, thick, length);
         this.model.setupAnim(entity, 0.0F, 0.0F, entity.tickCount + partialTicks, 0.0F, 0.0F);
         VertexConsumer consumer = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
         this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);

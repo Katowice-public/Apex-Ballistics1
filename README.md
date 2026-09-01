@@ -35,30 +35,28 @@ The file you want is `build/libs/apexballistics-1.0.0.jar`. Ignore any `-slim` /
 | Item | What it does |
 | --- | --- |
 | **Missile Launcher** | Right-click to open the load GUI if empty, or to fire a missile that is loaded in that GUI. Sneak-right-click always opens the GUI. **Unload** returns the missile to your inventory. Does not fire unless a real missile is in the launcher. |
-| **HE Missile** | Standard high-explosive impact. |
-| **Incendiary Missile** | Smaller blast that starts fires. |
-| **Cluster Missile** | Splits into bomblets on impact. |
-| **Homing Missile** | Steers toward a locked or nearby living target. |
-| **Bunker Missile** | Heavy blast that punches downward. |
-| **Cruise Missile** | Large missile that sits on the cruise launcher, nose toward the front. Climbs high, flies over, then dives on the target. |
+| **HE / Incendiary / Cluster / Homing / Bunker Missile** | Three marks. Mk I is the base craft. Mk II and Mk III fly a taller rainbow arc, hit harder, and are physically longer. |
+| **Cruise Missile** | Large missile that sits on the cruise launcher, nose toward the front. Climbs straight up, flies over, then dives on the target. |
 | **Rocket Fuel** | Crafting ingredient. |
 | **Target Designator** | Right-click a block to mark it, then put it in a launch pad or cruise launcher. |
 | **Coordinate Tool** | Right-click to open a GUI with X, Y, and Z boxes. Save, then put it in a cruise launcher or use it on a launch pad. |
 | **Launch Pad** | Load a missile, optional designator target, then right-click / pulse redstone to fire. Sneak-right-click ejects the missile. |
 | **Cruise Launcher** | 2 blocks long, 1 block high. **Right-click the placed block** to open the GUI, put in a cruise missile, set a location, then Launch. **Unload** or sneak-right-click takes the missile back. |
 
-Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight.
+Missiles leave a smoke/flame trail and explode on impact or after a few seconds of flight. **Regular missiles** (the handheld / launch-pad marks) fly a smooth rainbow arc — they take off at about 45°, climb, then dive. Higher marks climb higher and fly farther. **Cruise missiles** still go straight up off the rail, then over, then down; their pitch eases into that climb instead of snapping 0°→90°.
 
 Blast size and whether explosions break blocks are in `config/apexballistics-common.toml`.
 
 ## Crafting
 
 - **Rocket Fuel** — gunpowder + coal/charcoal + blaze powder (makes 3)
-- **HE Missile** — iron, TNT, rocket fuel, redstone
-- **Incendiary** — HE missile + fire charge
-- **Cluster** — HE missile + 2 firework stars
-- **Homing** — HE missile + eye of ender + redstone
-- **Bunker** — HE missile + obsidian + TNT
+- **HE Missile Mk I** — iron, TNT, rocket fuel, redstone
+- **Incendiary Mk I** — HE missile + fire charge
+- **Cluster Mk I** — HE missile + 2 firework stars
+- **Homing Mk I** — HE missile + eye of ender + redstone
+- **Bunker Mk I** — HE missile + obsidian + TNT
+- **Mk II** (any warhead) — that Mk I missile + rocket fuel + iron block
+- **Mk III** (any warhead) — that Mk II missile + 2 rocket fuel + gold block
 - **Cruise Missile** — bunker missile, TNT, iron, rocket fuel
 - **Launcher** — iron, dispenser, blaze rod, lever
 - **Designator** — copper, redstone, 2 spyglasses

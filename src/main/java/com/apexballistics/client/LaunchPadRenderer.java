@@ -2,6 +2,7 @@ package com.apexballistics.client;
 
 import com.apexballistics.block.LaunchPadBlock;
 import com.apexballistics.blockentity.LaunchPadBlockEntity;
+import com.apexballistics.entity.MissileTier;
 import com.apexballistics.entity.WarheadType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -34,7 +35,10 @@ public class LaunchPadRenderer implements BlockEntityRenderer<LaunchPadBlockEnti
         poseStack.mulPose(Axis.YP.rotationDegrees(facing.toYRot() - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
-        poseStack.scale(1.55F, 1.55F, 1.55F);
+        MissileTier tier = pad.getTier();
+        float thick = 1.40F * tier.thicknessScale();
+        float length = 1.55F * tier.lengthScale();
+        poseStack.scale(thick, thick, length);
         VertexConsumer consumer = buffer.getBuffer(this.model.renderType(MissileRenderer.textureFor(warhead)));
         this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();

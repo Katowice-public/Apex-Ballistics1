@@ -2,6 +2,7 @@ package com.apexballistics.blockentity;
 
 import com.apexballistics.block.LaunchPadBlock;
 import com.apexballistics.entity.MissileEntity;
+import com.apexballistics.entity.MissileTier;
 import com.apexballistics.entity.WarheadType;
 import com.apexballistics.item.MissileItem;
 import com.apexballistics.registry.ModBlockEntities;
@@ -102,16 +103,17 @@ public class LaunchPadBlockEntity extends BlockEntity {
         WarheadType warhead = missileItem.getWarhead();
         Direction facing = this.getBlockState().getValue(LaunchPadBlock.FACING);
         Vec3 spawn = Vec3.atCenterOf(this.worldPosition).add(0.0D, 0.85D, 0.0D);
-        MissileEntity entity = new MissileEntity(this.level, spawn.x, spawn.y, spawn.z, new Vec3(0.0D, 1.0D, 0.0D), warhead);
+        Vec3 forward = new Vec3(facing.getStepX(), 0.35D, facing.getStepZ());
+        MissileEntity entity = new MissileEntity(this.level, spawn.x, spawn.y, spawn.z, forward, warhead);
+        entity.setTier(missileItem.getTier());
         if (player != null) {
             entity.setOwner(player);
         }
 
-        BlockPos cruise = this.target != null
-                ? this.target
-                : this.worldPosition.relative(facing, 40).above(12);
-        entity.setSiloLaunch(true, cruise);
-        entity.setLaunchYaw(facing.toYRot());
+        Vec3 impact = this.target != null
+                ? Vec3.atCenterOf(this.target)
+                : Vec3.atCenterOf(this.worldPosition.relative(facing, (int) missileItem.getTier().range()));
+        entity.startArc(facing.toYRot(), impact, true);
         this.level.addFreshEntity(entity);
         this.level.playSound(null, this.worldPosition, ModSounds.SILO_FIRE.get(), SoundSource.BLOCKS, 1.2F, 0.9F);
 
@@ -175,7 +177,14 @@ public class LaunchPadBlockEntity extends BlockEntity {
     @Override
     public AABB getRenderBoundingBox() {
         BlockPos pos = this.worldPosition;
-        return new AABB(pos.getX() - 1.5D, pos.getY(), pos.getZ() - 1.5D,
-                pos.getX() + 2.5D, pos.getY() + 3.5D, pos.getZ() + 2.5D);
+        return new AABB(pos.getX() - 2.5D, pos.getY(), pos.getZ() - 2.5D,
+                pos.getX() + 3.5D, pos.getY() + 8.5D, pos.getZ() + 3.5D);
+    }
+
+    public MissileTier getTier() {
+        if (this.missile.getItem() instanceof MissileItem item) {
+            return item.getTier();
+        }
+        return MissileTier.T1;
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -20,10 +21,16 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 public class CruiseMissileEntity extends AbstractHurtingProjectile {
+    private static final float TURN_DEGREES_PER_TICK = 4.5F;
+    private static final float HEADING_DEGREES_PER_TICK = 6.5F;
+    private static final int BOOST_PITCH_TICKS = 32;
+
     private int maxLife = 800;
     private boolean exploded;
     private BallisticFlight.Phase phase = BallisticFlight.Phase.BOOST;
     private double cruiseAltitude = 120.0D;
+    private float launchYaw;
+    private Vec3 smoothedDir = new Vec3(0.0D, 1.0D, 0.0D);
     @Nullable
     private BlockPos target;
     @Nullable
@@ -40,6 +47,7 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         this.maxLife = ApexConfig.cruiseMaxLifetimeTicks > 0 ? ApexConfig.cruiseMaxLifetimeTicks : 800;
         this.launchPos = BlockPos.containing(x, y, z);
         this.cruiseAltitude = BallisticFlight.cruiseAltitude(level, y, y, ApexConfig.cruiseAltitudeBonus);
+        this.smoothedDir = direction.lengthSqr() < 1.0E-8D ? new Vec3(0.0D, 1.0D, 0.0D) : direction.normalize();
     }
 
     private void setFlight(Vec3 direction, double power) {
@@ -57,6 +65,15 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         }
     }
 
+    public void setLaunchYaw(float yaw) {
+        this.launchYaw = yaw;
+        this.setYRot(yaw);
+        this.yRotO = yaw;
+        double yawRad = Math.toRadians(yaw);
+        this.smoothedDir = new Vec3(-Math.sin(yawRad) * 0.77D, 0.64D, Math.cos(yawRad) * 0.77D).normalize();
+        this.setFlight(this.smoothedDir, BallisticFlight.speed(BallisticFlight.Phase.BOOST));
+    }
+
     @Override
     public void tick() {
         if (!this.level().isClientSide && this.target != null) {
@@ -68,11 +85,23 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
             }
             this.phase = BallisticFlight.nextPhase(this.phase, pos, dest, this.cruiseAltitude);
             Vec3 desired = BallisticFlight.desiredDirection(this.phase, pos, dest, this.cruiseAltitude);
-            this.setFlight(desired, BallisticFlight.speed(this.phase));
+            if (this.phase == BallisticFlight.Phase.BOOST && this.tickCount < BOOST_PITCH_TICKS) {
+                double t = Mth.clamp(this.tickCount / (double) BOOST_PITCH_TICKS, 0.0D, 1.0D);
+                t = t * t * (3.0D - 2.0D * t);
+                double yawRad = Math.toRadians(this.launchYaw);
+                Vec3 takeoff = new Vec3(-Math.sin(yawRad) * 0.77D, 0.64D, Math.cos(yawRad) * 0.77D).normalize();
+                desired = takeoff.lerp(new Vec3(0.0D, 1.0D, 0.0D), t).normalize();
+            }
+            this.smoothedDir = MissileOrientation.rotateToward(this.smoothedDir, desired, HEADING_DEGREES_PER_TICK);
+            this.setFlight(this.smoothedDir, BallisticFlight.speed(this.phase));
         }
 
+        float yawBefore = this.getYRot();
+        float pitchBefore = this.getXRot();
         super.tick();
-        MissileOrientation.faceVelocity(this);
+        this.yRotO = yawBefore;
+        this.xRotO = pitchBefore;
+        MissileOrientation.smoothTowardsMotion(this, this.getDeltaMovement(), TURN_DEGREES_PER_TICK, false);
 
         if (this.tickCount >= this.maxLife) {
             this.detonate();
@@ -170,6 +199,10 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         tag.putInt("MaxLife", this.maxLife);
         tag.putInt("Phase", this.phase.ordinal());
         tag.putDouble("CruiseAltitude", this.cruiseAltitude);
+        tag.putFloat("LaunchYaw", this.launchYaw);
+        tag.putDouble("SmoothX", this.smoothedDir.x);
+        tag.putDouble("SmoothY", this.smoothedDir.y);
+        tag.putDouble("SmoothZ", this.smoothedDir.z);
         if (this.target != null) {
             tag.putLong("Target", this.target.asLong());
         }
@@ -186,6 +219,10 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         BallisticFlight.Phase[] phases = BallisticFlight.Phase.values();
         this.phase = phaseId >= 0 && phaseId < phases.length ? phases[phaseId] : BallisticFlight.Phase.BOOST;
         this.cruiseAltitude = tag.contains("CruiseAltitude") ? tag.getDouble("CruiseAltitude") : 120.0D;
+        this.launchYaw = tag.getFloat("LaunchYaw");
+        if (tag.contains("SmoothX")) {
+            this.smoothedDir = new Vec3(tag.getDouble("SmoothX"), tag.getDouble("SmoothY"), tag.getDouble("SmoothZ"));
+        }
         this.target = tag.contains("Target") ? BlockPos.of(tag.getLong("Target")) : null;
         this.launchPos = tag.contains("LaunchPos") ? BlockPos.of(tag.getLong("LaunchPos")) : null;
     }
