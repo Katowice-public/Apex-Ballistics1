@@ -25,7 +25,7 @@ public class MissileRenderer extends EntityRenderer<MissileEntity> {
                        MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0D, entity.getBbHeight() * 0.5D, 0.0D);
-        MissileRenderUtil.orientArrowStyle(poseStack, entity, entityYaw, partialTicks);
+        MissileRenderUtil.orientNoseAlongMotion(poseStack, entity, entityYaw, partialTicks);
         MissileTier tier = entity.getTier();
         float thick = 1.55F * tier.thicknessScale();
         float length = 1.70F * tier.lengthScale();

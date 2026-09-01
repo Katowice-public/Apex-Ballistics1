@@ -32,7 +32,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
     private static final EntityDataAccessor<Integer> DATA_TIER =
             SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.INT);
 
-    private static final float TURN_DEGREES_PER_TICK = 5.0F;
+    private static final float TURN_DEGREES_PER_TICK = 16.0F;
 
     private int maxLife = 200;
     private boolean exploded;
@@ -61,15 +61,15 @@ public class MissileEntity extends AbstractHurtingProjectile {
         super(ModEntities.MISSILE.get(), owner, direction.normalize(), level);
         this.setWarhead(warhead);
         this.setPos(owner.getX(), owner.getEyeY() - 0.15D, owner.getZ());
-        this.setFlight(direction, 0.55D);
-        this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
+        this.setFlight(direction, 1.25D);
+        this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 400;
     }
 
     public MissileEntity(Level level, double x, double y, double z, Vec3 direction, WarheadType warhead) {
         super(ModEntities.MISSILE.get(), x, y, z, direction.normalize(), level);
         this.setWarhead(warhead);
-        this.setFlight(direction, 0.14D);
-        this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
+        this.setFlight(direction, 0.45D);
+        this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 400;
     }
 
     private void setFlight(Vec3 direction, double power) {
@@ -113,7 +113,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
         this.launchYawKnown = true;
         this.launchPos = this.blockPosition();
         this.setYRot(yaw);
-        this.setXRot(fromPad ? -90.0F : -38.0F);
+        this.setXRot(fromPad ? 90.0F : 38.0F);
         this.yRotO = yaw;
         this.xRotO = this.getXRot();
 
@@ -144,7 +144,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
         this.maxLife = Math.max(this.maxLife, this.arcDuration + 40);
         this.setNoGravity(true);
         this.accelerationPower = 0.0D;
-        this.setFlight(horiz.scale(0.72D).add(0.0D, 0.70D, 0.0D), 0.55D);
+        this.setFlight(horiz.scale(0.72D).add(0.0D, 0.70D, 0.0D), 1.35D);
     }
 
     public void setLaunchYaw(float yaw) {
@@ -183,9 +183,8 @@ public class MissileEntity extends AbstractHurtingProjectile {
         float yawBefore = this.getYRot();
         float pitchBefore = this.getXRot();
         super.tick();
-        this.yRotO = yawBefore;
-        this.xRotO = pitchBefore;
-        MissileOrientation.smoothTowardsMotion(this, this.getDeltaMovement(), TURN_DEGREES_PER_TICK, true);
+        MissileOrientation.restoreAndSmooth(this, yawBefore, pitchBefore,
+                MissileOrientation.visualMotion(this), TURN_DEGREES_PER_TICK);
 
         if (this.tickCount >= this.maxLife) {
             this.detonate();
@@ -269,8 +268,8 @@ public class MissileEntity extends AbstractHurtingProjectile {
         } else {
             current = current.normalize();
         }
-        Vec3 blended = MissileOrientation.rotateToward(current, desired, 8.0F);
-        this.setFlight(blended, Math.max(this.accelerationPower, 0.16D));
+        Vec3 blended = MissileOrientation.rotateToward(current, desired, 14.0F);
+        this.setFlight(blended, 1.15D);
     }
 
     @Nullable
