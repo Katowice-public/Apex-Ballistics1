@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -189,13 +188,5 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         this.cruiseAltitude = tag.contains("CruiseAltitude") ? tag.getDouble("CruiseAltitude") : 120.0D;
         this.target = tag.contains("Target") ? BlockPos.of(tag.getLong("Target")) : null;
         this.launchPos = tag.contains("LaunchPos") ? BlockPos.of(tag.getLong("LaunchPos")) : null;
-    }
-
-    @Override
-    public void setOwner(@Nullable Entity owner) {
-        super.setOwner(owner);
-        if (owner instanceof LivingEntity living) {
-            this.setRot(living.getYRot(), living.getXRot());
-        }
     }
 }

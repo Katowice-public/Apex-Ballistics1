@@ -111,6 +111,7 @@ public class LaunchPadBlockEntity extends BlockEntity {
                 ? this.target
                 : this.worldPosition.relative(facing, 40).above(12);
         entity.setSiloLaunch(true, cruise);
+        entity.setLaunchYaw(facing.toYRot());
         this.level.addFreshEntity(entity);
         this.level.playSound(null, this.worldPosition, ModSounds.SILO_FIRE.get(), SoundSource.BLOCKS, 1.2F, 0.9F);
 

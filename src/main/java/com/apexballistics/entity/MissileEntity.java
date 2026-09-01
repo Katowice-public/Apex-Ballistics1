@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -39,6 +40,8 @@ public class MissileEntity extends AbstractHurtingProjectile {
     private BlockPos cruiseTarget;
     @Nullable
     private BlockPos launchPos;
+    private float launchYaw;
+    private boolean launchYawKnown;
     @Nullable
     private UUID lockedTargetId;
     @Nullable
@@ -54,6 +57,7 @@ public class MissileEntity extends AbstractHurtingProjectile {
         this.setWarhead(warhead);
         this.setPos(owner.getX(), owner.getEyeY() - 0.15D, owner.getZ());
         this.setFlight(direction, 0.72D);
+        ProjectileUtil.rotateTowardsMovement(this, 1.0F);
         this.yRotO = this.getYRot();
         this.xRotO = this.getXRot();
         this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
@@ -63,6 +67,9 @@ public class MissileEntity extends AbstractHurtingProjectile {
         super(ModEntities.MISSILE.get(), x, y, z, direction.normalize(), level);
         this.setWarhead(warhead);
         this.setFlight(direction, 0.14D);
+        ProjectileUtil.rotateTowardsMovement(this, 1.0F);
+        this.yRotO = this.getYRot();
+        this.xRotO = this.getXRot();
         this.maxLife = ApexConfig.maxLifetimeTicks > 0 ? ApexConfig.maxLifetimeTicks : 200;
     }
 
@@ -74,7 +81,6 @@ public class MissileEntity extends AbstractHurtingProjectile {
         this.accelerationPower = 0.05D;
         this.setDeltaMovement(n.scale(power));
         this.hasImpulse = true;
-        MissileOrientation.faceDirection(this, n);
     }
 
     public void setWarhead(WarheadType warhead) {
@@ -101,6 +107,15 @@ public class MissileEntity extends AbstractHurtingProjectile {
             this.cruiseAltitude = BallisticFlight.cruiseAltitude(
                     this.level(), this.getY(), targetY, ApexConfig.cruiseAltitudeBonus);
         }
+    }
+
+    public void setLaunchYaw(float yaw) {
+        this.launchYaw = yaw;
+        this.launchYawKnown = true;
+        this.setYRot(yaw);
+        this.setXRot(-90.0F);
+        this.yRotO = yaw;
+        this.xRotO = -90.0F;
     }
 
     public void setMaxLife(int maxLife) {
@@ -130,8 +145,13 @@ public class MissileEntity extends AbstractHurtingProjectile {
             this.steerTowardTarget();
         }
 
+        float yawBefore = this.getYRot();
         super.tick();
-        MissileOrientation.faceVelocity(this);
+        Vec3 motion = this.getDeltaMovement();
+        if (motion.horizontalDistance() < 0.05D && Math.abs(motion.y) > 0.05D) {
+            this.setYRot(this.launchYawKnown ? this.launchYaw : yawBefore);
+            this.setXRot(motion.y >= 0.0D ? -90.0F : 90.0F);
+        }
 
         if (this.tickCount >= this.maxLife) {
             this.detonate();
@@ -139,7 +159,6 @@ public class MissileEntity extends AbstractHurtingProjectile {
         }
 
         if (this.level().isClientSide) {
-            Vec3 motion = this.getDeltaMovement();
             this.level().addParticle(ParticleTypes.FLAME,
                     this.getX() - motion.x * 0.5D,
                     this.getY() - motion.y * 0.5D,
@@ -371,6 +390,8 @@ public class MissileEntity extends AbstractHurtingProjectile {
         tag.putBoolean("Ballistic", this.ballistic);
         tag.putInt("Phase", this.phase.ordinal());
         tag.putDouble("CruiseAltitude", this.cruiseAltitude);
+        tag.putFloat("LaunchYaw", this.launchYaw);
+        tag.putBoolean("LaunchYawKnown", this.launchYawKnown);
         if (this.cruiseTarget != null) {
             tag.putLong("CruiseTarget", this.cruiseTarget.asLong());
         }
@@ -392,6 +413,8 @@ public class MissileEntity extends AbstractHurtingProjectile {
         BallisticFlight.Phase[] phases = BallisticFlight.Phase.values();
         this.phase = phaseId >= 0 && phaseId < phases.length ? phases[phaseId] : BallisticFlight.Phase.BOOST;
         this.cruiseAltitude = tag.contains("CruiseAltitude") ? tag.getDouble("CruiseAltitude") : 80.0D;
+        this.launchYaw = tag.getFloat("LaunchYaw");
+        this.launchYawKnown = tag.getBoolean("LaunchYawKnown");
         if (tag.contains("CruiseTarget")) {
             this.cruiseTarget = BlockPos.of(tag.getLong("CruiseTarget"));
         }

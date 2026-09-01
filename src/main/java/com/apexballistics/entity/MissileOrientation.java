@@ -10,7 +10,8 @@ public final class MissileOrientation {
 
     /**
      * Point the nose along velocity. Yaw 0 = +Z, pitch positive = nose up.
-     * Call after {@code super.tick()} so it wins over fireball rotation.
+     * Nearly vertical paths keep the previous yaw so a launcher missile pitches
+     * up instead of snapping to south.
      */
     public static void faceVelocity(Entity entity) {
         faceDirection(entity, entity.getDeltaMovement());
@@ -20,8 +21,12 @@ public final class MissileOrientation {
         if (motion.lengthSqr() < 1.0E-8D) {
             return;
         }
-        float yaw = (float) (Mth.atan2(motion.x, motion.z) * (180.0D / Math.PI));
-        float pitch = (float) (Mth.atan2(motion.y, motion.horizontalDistance()) * (180.0D / Math.PI));
+        double horiz = motion.horizontalDistance();
+        float yaw = entity.getYRot();
+        if (horiz > 0.05D) {
+            yaw = (float) (Mth.atan2(motion.x, motion.z) * (180.0D / Math.PI));
+        }
+        float pitch = (float) (Mth.atan2(motion.y, horiz) * (180.0D / Math.PI));
         entity.setYRot(yaw);
         entity.setXRot(pitch);
         if (entity.tickCount <= 1) {
