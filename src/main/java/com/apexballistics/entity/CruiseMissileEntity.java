@@ -21,9 +21,9 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 public class CruiseMissileEntity extends AbstractHurtingProjectile {
-    private static final float TURN_DEGREES_PER_TICK = 4.5F;
-    private static final float HEADING_DEGREES_PER_TICK = 6.5F;
-    private static final int BOOST_PITCH_TICKS = 32;
+    private static final float TURN_DEGREES_PER_TICK = 14.0F;
+    private static final float HEADING_DEGREES_PER_TICK = 11.0F;
+    private static final int BOOST_PITCH_TICKS = 22;
 
     private int maxLife = 800;
     private boolean exploded;
@@ -99,9 +99,8 @@ public class CruiseMissileEntity extends AbstractHurtingProjectile {
         float yawBefore = this.getYRot();
         float pitchBefore = this.getXRot();
         super.tick();
-        this.yRotO = yawBefore;
-        this.xRotO = pitchBefore;
-        MissileOrientation.smoothTowardsMotion(this, this.getDeltaMovement(), TURN_DEGREES_PER_TICK, false);
+        MissileOrientation.restoreAndSmooth(this, yawBefore, pitchBefore,
+                MissileOrientation.visualMotion(this), TURN_DEGREES_PER_TICK);
 
         if (this.tickCount >= this.maxLife) {
             this.detonate();

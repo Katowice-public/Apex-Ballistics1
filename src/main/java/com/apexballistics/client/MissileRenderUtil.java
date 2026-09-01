@@ -10,24 +10,22 @@ public final class MissileRenderUtil {
     }
 
     /**
-     * +Z-nose models (cruise missile). Uses the entity's smoothed yaw/pitch so the
-     * nose eases from the rail pose into the climb instead of snapping to velocity.
+     * +Z-nose models. Yaw 0 = south, pitch + = nose up. Must match
+     * {@link com.apexballistics.entity.MissileOrientation}.
      */
     public static void orientNoseAlongMotion(PoseStack poseStack, Entity entity, float partialTicks) {
         float yaw = Mth.rotLerp(partialTicks, entity.yRotO, entity.getYRot());
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
-        poseStack.mulPose(Axis.YP.rotationDegrees(-yaw));
-        poseStack.mulPose(Axis.XP.rotationDegrees(-pitch));
+        applyNoseRotation(poseStack, yaw, pitch);
     }
 
-    /**
-     * Small missiles share AbstractHurtingProjectile's arrow-style rotation
-     * ({@code yRot-90} + Z pitch). The extra Y -90 turns our +Z nose into +X.
-     */
-    public static void orientArrowStyle(PoseStack poseStack, Entity entity, float entityYaw, float partialTicks) {
+    public static void orientNoseAlongMotion(PoseStack poseStack, Entity entity, float entityYaw, float partialTicks) {
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
-        poseStack.mulPose(Axis.YP.rotationDegrees(entityYaw - 90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(pitch));
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+        applyNoseRotation(poseStack, entityYaw, pitch);
+    }
+
+    public static void applyNoseRotation(PoseStack poseStack, float yaw, float pitch) {
+        poseStack.mulPose(Axis.YP.rotationDegrees(-yaw));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-pitch));
     }
 }

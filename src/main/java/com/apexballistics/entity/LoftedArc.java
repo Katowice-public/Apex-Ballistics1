@@ -29,7 +29,7 @@ public final class LoftedArc {
 
     public static int durationTicks(double range, double height) {
         double path = range * 1.15D + height * 0.85D;
-        return Mth.clamp((int) Math.round(path / 0.48D), 70, 700);
+        return Mth.clamp((int) Math.round(path / 2.05D), 36, 280);
     }
 
     private static Vec3 cubic(Vec3 a, Vec3 b, Vec3 c, Vec3 d, double t) {
